@@ -1,0 +1,69 @@
+<%- include("template/cabecera", {titleWeb: 'MCU'})  %>
+<link rel="stylesheet" href="css/styles.css">
+<link href="https://vjs.zencdn.net/5.19/video-js.css" rel="stylesheet">
+
+<body>
+
+    <!-- NAV -->
+    <%- include("template/nav") %>
+
+    <header class="main-header">
+
+        <div class="logo">
+            <h1>LABORATORIO REMOTO</h1>
+        </div>
+
+        <div class="practica-name">
+            <h2>MCU </h2>
+        </div>
+
+    </header>
+
+
+    <div class="panel">
+
+        <div class="video-panel">
+            <img id="video">
+
+        </div>
+
+        <div class="controls-container">
+
+            <div class="controls-panel">
+                <div class="mode-container">
+                    <h2 id="ins"></h2>
+
+                </div>
+
+                <div class="playButtons-container">
+
+                    <div class="playpause">
+                        <input type="checkbox" value="None" id="playpause" name="check" checked="" />
+                        <label for="playpause" tabindex=1></label>
+                        <div id="L1">INICIAR</div>
+                    </div>
+
+                    <div class="record">
+                        <input type="checkbox" value="None" id="record" name="check" disabled />
+                        <label for="record" tabindex=1></label>
+                        <div id="L2">GRABAR</div>
+
+                    </div>
+
+                    <div id="msg">PRESIONE INICIAR</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.bootcss.com/flv.js/1.5.0/flv.min.js"></script>
+    <script src="js/socket.io.js"></script>
+    <script src="js/main.js"></script>
+    </head>
+
+</body>
+<%- include("template/footer") %>
