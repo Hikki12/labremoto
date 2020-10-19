@@ -26,39 +26,36 @@ recordBtn.disabled = false;
 //tiempo de grabación
 var T = 20;
 
-data = {Mode:mode,Radio: R,RPM: speedRPM,PlayState: playState,RecordState: recordState,DirState: dirState};
+data = { Mode: mode, Radio: R, RPM: speedRPM, PlayState: playState, RecordState: recordState, DirState: dirState };
 
 //
 var control = false;
 
 //
-function updateValues(){
-	data = {Mode:mode,Radio: R,RPM: speedRPM,PlayState: playState,RecordState: recordState,DirState:dirState,Time:T};
+function updateValues() {
+	//data = {Mode:mode,Radio: R,RPM: speedRPM,PlayState: playState,RecordState: recordState,DirState:dirState,Time:T};
 	data = {
-		   Mode:mode,
-		   Radio: R,
-		   RPM: speedRPM,
-		   Steps: rpm2steps(speedRPM),
-		   PlayState: playState,
-		   Recording: recordState,
-	       RecordingAvailable:false,
-		   DirState: dirState,
-		   RecordingTime: T,
-		   StableSpeed:false,
-		   Busy:false
-		 };
-	
-
+		Mode: mode,
+		Radio: R,
+		RPM: speedRPM,
+		Steps: rpm2steps(speedRPM),
+		PlayState: playState, //movimiento
+		Recording: recordState,
+		RecordingAvailable: false,
+		DirState: dirState, // Direccion
+		RecordingTime: T,
+		StableSpeed: false, // para grabar la maqueta
+		Busy: false // estado de maquita
+	};
 	sendUpdatedValues();
 }
 
-
 //
-function randomConditions(){
+function randomConditions() {
 	//RANDOM SPEED RPM
 	var min = 33; // steps
 	var max = 140;
-	speedRPM =  0.3*(Math.floor(Math.random() * (max - min)) + min);
+	speedRPM = 0.3 * (Math.floor(Math.random() * (max - min)) + min);
 
 	//RANDOM RADIO 
 	R = Math.floor(Math.random() * 3) + 1;
@@ -76,28 +73,22 @@ function randomConditions(){
 	//console.log("dirState: ",dirState);
 	//console.log("T: ",T);
 
-	updateValues();		
-
-
-
+	updateValues();
 }
 
-
-function steps2rpm(steps){
-	return (0.3*steps).toFixed(1)
+function steps2rpm(steps) {
+	return (0.3 * steps).toFixed(1)
 }
 
-function rpm2steps(rpm){
-	return parseInt(rpm/0.3)
+function rpm2steps(rpm) {
+	return parseInt(rpm / 0.3)
 }
 
-
-function sendUpdatedValues(){
-	socket.emit("updates_from_js_client",data)
+function sendUpdatedValues() {
+	socket.emit("updates_from_js_client", data)
 }
 
-
-function reciveUpdates(data){
+function reciveUpdates(data) {
 	mode = data.Mode;
 	R = data.Radio;
 	speedRPM = data.RPM;
@@ -112,59 +103,52 @@ function reciveUpdates(data){
 	//speedSlider.value = rpm2steps(speedRPM).toFixed(1);
 	//speedLabel.innerHTML = speedRPM;
 
-	playBtn.checked = !playState ;
+	playBtn.checked = !playState;
 	recordBtn.checked = recordState;
-	console.log(playState,recordState,estableSpeed);
+	console.log(playState, recordState, estableSpeed);
 
-	if(playState == false && estableSpeed == false){
+	if (playState == false && estableSpeed == false) {
 		msg.innerHTML = "PRESIONE INICIAR";
 	}
-	if(playState == true && estableSpeed == false && recordState == false){
+	if (playState == true && estableSpeed == false && recordState == false) {
 		msg.innerHTML = "ESPERE...";
 	}
-	if(playState == true && recordState == false && estableSpeed == true){
+	if (playState == true && recordState == false && estableSpeed == true) {
 		msg.innerHTML = "PRESIONE GRABAR";
 	}
-	if(playState == true && recordState == true && estableSpeed == true){
+	if (playState == true && recordState == true && estableSpeed == true) {
 		msg.innerHTML == "GRABANDO...";
 	}
 
-
-
 }
 
-
-
-
 // PLAY/PAUSE BUTTON
-playBtn.addEventListener("input",() =>{
+playBtn.addEventListener("input", () => {
 	playState = !playBtn.checked
-	console.log("Play state: ",playState);
-	
-	console.log("DATA: ",data);
-	
-		
-		updateValues();
-		if(playBtn.checked == false){
-			msg.innerHTML = "PRESIONE INICIAR";
+	console.log("Play state: ", playState);
 
-		}
+	console.log("DATA: ", data);
 
-		if(playBtn.checked == true){
-			msg.innerHTML = "ESPERE...";
-		}
-		
-	
+	updateValues();
+	if (playBtn.checked == false) {
+		msg.innerHTML = "PRESIONE INICIAR";
+
+	}
+
+	if (playBtn.checked == true) {
+		msg.innerHTML = "ESPERE...";
+	}
+
 });
 
 //RECORD BUTTON 
-recordBtn.addEventListener("input",() =>{
+recordBtn.addEventListener("input", () => {
 	recordState = recordBtn.checked;
 
-	if(recordBtn.checked == true){
+	if (recordBtn.checked == true) {
 		msg.innerHTML = "GRABANDO..."
 	}
-	if(recordBtn.checked == false){
+	if (recordBtn.checked == false) {
 		msg.innerHTML = "PRESIONE INICIAR";
 	}
 	updateValues();
@@ -172,24 +156,22 @@ recordBtn.addEventListener("input",() =>{
 
 //
 
-socket.on('connect', (s) =>{
+socket.on('connect', (s) => {
 	console.log('conectado xD');
-	
-	socket.emit('request_control');
-	console.log("My ID: ",socket.id);
-	console.log("PlayBtn :",playBtn.checked);
 
+	socket.emit('request_control');
+	console.log("My ID: ", socket.id);
+	console.log("PlayBtn :", playBtn.checked);
 
 });
 
-socket.on('updates_from_server',(data)=>{
+socket.on('updates_from_server', (data) => {
 	reciveUpdates(data);
 	console.log(data);
 
-
 });
 
-socket.on('img_update',(data)=>{
-	img.src ='data:image/jpeg;base64,' + data;
+socket.on('img_update', (data) => {
+	img.src = 'data:image/jpeg;base64,' + data;
 });
 

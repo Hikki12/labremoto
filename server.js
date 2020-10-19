@@ -14,7 +14,7 @@ var storage = multer.diskStorage( {
             cb( null, file.originalname);
         }
     }
-);
+);	
 
 var upload = multer( { storage: storage } );
 
@@ -36,6 +36,10 @@ app.get('/',function(request,res){
 
 app.get('/login',function(request,res){
     res.render('login');
+});
+
+app.get('/project',function(request,res){
+    res.render('project');
 });
 
 app.get('/mcu',function(request,res){
