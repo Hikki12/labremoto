@@ -2,7 +2,8 @@ var dbconfig = require('../config/database');
 var mysql = require('mysql');
 var connection = mysql.createConnection(dbconfig.connection);
 var bcrypt = require('bcrypt-nodejs');
-
+// 34.00
+// de 13,50 y 20,50
 
 
 module.exports = function (app, passport) {
@@ -30,11 +31,22 @@ module.exports = function (app, passport) {
     });
 
     app.get('/mcu',function(req,res, next){
-        var usernames= req.param('username', null);  
+        var usernames= '';  
+        console.log([req.user.username]);
         var row = "";
-            row = [req.user.username];
-
-        res.render('mcu', {usernames: row, status: "true"});
+        row = [req.user.username.replace("@utpl.edu.ec", "")];
+        var rol = "";
+        rol = [req.user.rol]
+        console.log([req.user.rol]);
+        if(rol == "estudiante"){
+            console.log("es estudiante");
+            res.render('mcu', {usernames: row, status: "true", rol: "estudiante"});
+        } else if(rol == "docente"){
+            console.log("es docente");
+            res.render('mcu', {usernames: row, status: "true", rol: "docente"});
+            
+        }
+        
     });
 
     app.get('/session', function (req, res) {
@@ -43,9 +55,11 @@ module.exports = function (app, passport) {
         //res.render('index', {title: "salio", usernames: "enseñar", status: "false"});
         if ([req.user.username]) {
             console.log([req.user.username]);
+            console.log("replace user ",[req.user.username.replace("@utpl.edu.ec", "")]);
             var usernames= req.param('username', null);  
             var row = "";
-            row = [req.user.username];
+            row = [req.user.username.replace("@utpl.edu.ec", "")];
+            
             var logout = '<a href="/logout">Logout</a>';
             res.render('index.ejs', { title: "mi titulo dinamico" , usernames: row, status: "true"});
         } else {
