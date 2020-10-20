@@ -6,6 +6,27 @@ const bodyParser = require('body-parser')
 var multer  = require('multer')
 
 
+var dbconfig = require('./config/database');
+var mysql = require('mysql');
+var connection = mysql.createConnection(dbconfig.connection);
+var session  = require('express-session');
+var cookieParser = require('cookie-parser');
+var morgan = require('morgan');
+var passport = require('passport');
+var flash    = require('connect-flash');
+require('./config/passport.js')(passport); 
+
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.use(bodyParser.json());
+
+
+
+
 var storage = multer.diskStorage( {
         destination: './uploads/',
         filename: function ( req, file, cb ) {
@@ -31,20 +52,18 @@ app.use(express.static(path.join(__dirname,'public')));
 
 //Rutas
 app.get('/',function(request,res){
-    res.render('index', {title: "mi titulo dinamico" });
+    res.render('index', {title: "salio", usernames: "enseñar", status: "false"});
 });
 
 app.get('/login',function(request,res){
-    res.render('login');
+    res.render('login', {status: "false"});
 });
 
 app.get('/project',function(request,res){
-    res.render('project');
+    res.render('project', {status: "false"});
 });
 
-app.get('/mcu',function(request,res){
-    res.render('mcu');
-});
+
 
 app.post('/file_upload', upload.any(), function (req, res, next) {
   // req.file is the `avatar` file
@@ -69,18 +88,18 @@ var control_busy = false;
 var master = "";
 var user = "";
 var variables_data ={
-				Mode:false,
-				Radio: 1,
-				RPM: 0,
-				Steps: 0,
-			    PlayState: false,
-				Recording: false,
-				RecordingAvailable:false,
-				DirState: false,
-				RecordingTime: false,
-				StableSpeed:false,
-				Busy:false
-				 };
+	Mode:false,
+	Radio: 1,
+	RPM: 0,
+	Steps: 0,
+	PlayState: false,
+	Recording: false,
+	RecordingAvailable:false,
+	DirState: false,
+	RecordingTime: false,
+	StableSpeed:false,
+	Busy:false
+};
 
 io.on('connection', (socket)=> {
 	//indx_busy++;
@@ -135,4 +154,18 @@ io.on('connection', (socket)=> {
 
 
 });
+
+// required for passport
+app.use(session({
+    secret: 'kodizimcomisrunning',
+    resave: true,
+    saveUninitialized: true
+ } )); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+
+// routes ======================================================================
+require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 

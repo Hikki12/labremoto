@@ -1,4 +1,4 @@
-<%- include("template/cabecera", {titleWeb: 'Home | LabRemotoUTPL'})  %>
+<%- include("template/cabecera", {titleWeb: 'Home'})  %>
 
 <body>
 
@@ -13,10 +13,22 @@
           <div>
             <h1>
                 Laboratorios Remotos <span>UTPL</span></h1>
-            <h2>Una nueva manera de enseñar</h2>
-            <div class="text-center text-lg-left">
-                <a href="login" class="btn-get-started scrollto">Comenzamos</a>
-            </div>
+            
+                
+                <%if (usernames == "enseñar") { %>
+                    <h2>Una nueva manera de enseñar</h2>
+            
+                    <div class="text-center text-lg-left">  
+                        <a href="login" class="btn-get-started scrollto"> Comenzamos</a>
+                    </div>
+                <% }else { %>
+                    <h2>Una nueva manera de enseñar | @<%= usernames %></h2>
+                    
+                    <div class="text-center text-lg-left">  
+                        <a href="/logout">Salir</a>
+                    </div>
+                <% } %>
+            
           </div>
         </div>
         <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">
@@ -32,7 +44,7 @@
             <div class="container">
 
                 <div class="section-title">
-                    <h2>Servicios que presta el LabRemoto</h2>
+                    <h2>Servicios que presta el LabRemoto </h2>
                     <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit
                         sint
                         consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.

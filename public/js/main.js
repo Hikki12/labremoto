@@ -17,16 +17,30 @@ var R = 1;
 var speedRPM = 0;
 
 var playState = false;
-var recordState = false;
+
 var dirState = false;
 var estableSpeed = false;
 
-recordBtn.disabled = false;
+recordBtn.checked = false;
+var recordState = recordBtn.checked;
+console.log("estado: ",recordState);
 
 //tiempo de grabación
 var T = 20;
-
-data = { Mode: mode, Radio: R, RPM: speedRPM, PlayState: playState, RecordState: recordState, DirState: dirState };
+data = {
+	Mode: mode,
+	Radio: R,
+	RPM: speedRPM,
+	Steps: rpm2steps(speedRPM),
+	PlayState: playState, //movimiento
+	Recording: recordState,
+	RecordingAvailable: false,
+	DirState: dirState, // Direccion
+	RecordingTime: T,
+	StableSpeed: false, // para grabar la maqueta
+	Busy: false // estado de maquita
+};
+// data = { Mode: mode, Radio: R, RPM: speedRPM, PlayState: playState, RecordState: recordState, DirState: dirState };
 
 //
 var control = false;
@@ -34,6 +48,11 @@ var control = false;
 //
 function updateValues() {
 	//data = {Mode:mode,Radio: R,RPM: speedRPM,PlayState: playState,RecordState: recordState,DirState:dirState,Time:T};
+	if(typeof recordState == "undefined"){
+		console.log("nellll");
+		recordState = false
+	}
+
 	data = {
 		Mode: mode,
 		Radio: R,
@@ -144,6 +163,8 @@ playBtn.addEventListener("input", () => {
 //RECORD BUTTON 
 recordBtn.addEventListener("input", () => {
 	recordState = recordBtn.checked;
+	console.log(recordState);
+	console.log("DATA: ", data);
 
 	if (recordBtn.checked == true) {
 		msg.innerHTML = "GRABANDO..."
