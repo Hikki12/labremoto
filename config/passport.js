@@ -65,12 +65,12 @@ module.exports = function(passport) {
                 if (err)
                     return done(err);
                 if (!rows.length) {
-                    return done(null, false, req.flash('loginMessage', 'bulunamadi.')); 
+                    return done(null, false, req.flash('loginMessage', 'Usuario incorrecto.')); 
                 }
 
            
                 if (!bcrypt.compareSync(password, rows[0].password))
-                    return done(null, false, req.flash('loginMessage', 'yanlis parola.'));
+                    return done(null, false, req.flash('loginMessage', 'Contraseña incorrecta.'));
 
           
                 return done(null, rows[0]);

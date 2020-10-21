@@ -26,33 +26,33 @@ module.exports = function (app, passport) {
 
             }
 
-            res.render('index', { usernames: row, status: "false"}); // user.ejs ye gönderiyoruz . 
+            res.render('index', { usernames: row, status: "false" }); // user.ejs ye gönderiyoruz . 
         });
     });
 
-    app.get('/mcu',function(req,res, next){
-        var usernames= '';  
+    app.get('/mcu', function (req, res, next) {
+        var usernames = '';
         console.log([req.user.username]);
         var row = "";
         row = [req.user.username.replace("@utpl.edu.ec", "")];
         var rol = "";
         rol = [req.user.rol]
         console.log([req.user.rol]);
-        if(rol == "estudiante"){
+        if (rol == "estudiante") {
             console.log("es estudiante");
-            res.render('mcu', {usernames: row, status: "true", rol: "estudiante"});
-        } else if(rol == "docente"){
+            res.render('mcu', { usernames: row, status: "true", rol: "estudiante" });
+        } else if (rol == "docente") {
             console.log("es docente");
-            res.render('mcu', {usernames: row, status: "true", rol: "docente"});
-            
+            res.render('mcu', { usernames: row, status: "true", rol: "docente" });
+
         }
-        
+
     });
 
-    app.get('/reserva',function(req,res, next){
-        var usernames= '';  
-        var names= ''; 
-        var lastNames= ''; 
+    app.get('/reserva', function (req, res, next) {
+        var usernames = '';
+        var names = '';
+        var lastNames = '';
         console.log([req.user.username]);
         var row = "";
         row = [req.user.username.replace("@utpl.edu.ec", "")];
@@ -64,24 +64,79 @@ module.exports = function (app, passport) {
         var lastNames2 = "";
         lastNames2 = [req.user.lastName]
         console.log([req.user.lastName]);
-        if(rol == "estudiante"){
+        if (rol == "estudiante") {
             console.log("es estudiante");
-            res.render('reserva', {usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('message') });
-        } else if(rol == "docente"){
+            res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage'), alert: 'ok' });
+        } else if (rol == "docente") {
             console.log("es docente");
-            res.render('reserva', {usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('message') });
-            
+            res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), alert: 'ok' });
+
         }
-        
+
     });
 
     app.post("/reserva", (req, res) => {
-        const {name, lastName, email, date, startTime, endTime } = req.body;
+        const { name, lastName, email, date, startTime, endTime } = req.body;
         console.log({ name, lastName, email, date, startTime, endTime });
-        connection.query('INSERT INTO reservations SET? ', { name, lastName, email, date, startTime, endTime }, (err, result) => {
-            res.redirect("/session");
+        var usernames = '';
+        var names = '';
+        var lastNames = '';
+        console.log([req.user.username]);
+        var row = "";
+        row = [req.user.username.replace("@utpl.edu.ec", "")];
+        var rol = "";
+        rol = [req.user.rol]
+        var names2 = "";
+        names2 = [req.user.name]
+        console.log("sdas ", names2);
+        var lastNames2 = "";
+        lastNames2 = [req.user.lastName]
+        console.log([req.user.lastName]);
+
+        connection.query("SELECT * FROM reservations WHERE date = ?", [date], function (err, rows) {
+            if (err)
+                return done(err);
+            if (rows.length) {
+                //return done(null, false, req.flash('ReservaMessage', 'Esta acupada la maqueta para esta fecha y hora.'));
+
+                console.log('Esta acupada la maqueta para esta fecha y hora.');
+                //alert('Esta acupada la maqueta para esta fecha y hora');
+                alert2 = req.flash('ReservaMessage', 'Esta acupada la maqueta para esta fecha y hora.');
+                res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Esta acupada la maqueta para esta fecha y hora.' });
+                
+                //return done(null, false, req.flash('loginMessage', 'Esta acupada la maqueta para esta fecha y hora.'));
+            } else {
+                connection.query('INSERT INTO reservations SET? ', { name, lastName, email, date, startTime, endTime }, (err, result) => {
+                    res.redirect("/session");
+                });
+            }
         });
+
     });
+
+    /*
+    connection.query("SELECT * FROM users WHERE username = ?",[username], function(err, rows) {
+                if (err)
+                    return done(err);
+                if (rows.length) {
+                    return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+                } else {
+
+                    var newUserMysql = {
+                        username: username,
+                        password: bcrypt.hashSync(password, null, null)
+                    };
+
+                    var insertQuery = "INSERT INTO users ( username, password ) values (?,?)";
+
+                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password],function(err, rows) {
+                        newUserMysql.id = rows.insertId;
+
+                        return done(null, newUserMysql);
+                    });
+                }
+            });
+    */
 
 
     app.get('/session', function (req, res) {
@@ -90,30 +145,22 @@ module.exports = function (app, passport) {
         //res.render('index', {title: "salio", usernames: "enseñar", status: "false"});
         if ([req.user.username]) {
             console.log([req.user.username]);
-            console.log("replace user ",[req.user.username.replace("@utpl.edu.ec", "")]);
-            var usernames= req.param('username', null);  
+            console.log("replace user ", [req.user.username.replace("@utpl.edu.ec", "")]);
+            var usernames = req.param('username', null);
             var row = "";
             row = [req.user.username.replace("@utpl.edu.ec", "")];
-            
+
             var logout = '<a href="/logout">Logout</a>';
-            res.render('index.ejs', { title: "mi titulo dinamico" , usernames: row, status: "true"});
+            res.render('index.ejs', { title: "mi titulo dinamico", usernames: row, status: "true" });
         } else {
-            
+
         }
-        
-    });
-
-    app.get('/login', function (req, res) {
-
-        res.render('login', { message: req.flash('loginMessage') });
 
     });
 
-    
-
-    app.get('/signup', function(req, res){
-        res.render('signup',{message: req.flash('message')});
-      });
+    app.get('/signup', function (req, res) {
+        res.render('signup', { message: req.flash('message') });
+    });
 
     /*app.post('/signup', passport.authenticate('local-signup', {
             successRedirect: '/login',
@@ -121,14 +168,14 @@ module.exports = function (app, passport) {
             failureFlash : true 
     }));*/
     app.post("/signup", (req, res) => {
-        const {lastname, firstname, message } = req.body;
-        console.log({lastname, firstname, message });
-        connection.query('INSERT INTO messages SET?', {firstname, lastname, message}, (err, result) => {
+        const { lastname, firstname, message } = req.body;
+        console.log({ lastname, firstname, message });
+        connection.query('INSERT INTO messages SET?', { firstname, lastname, message }, (err, result) => {
             res.redirect("/");
         });
     });
 
-    
+
     app.post('/login', passport.authenticate('local-login', {
         successRedirect: '/session',
         failureRedirect: '/login',
@@ -147,6 +194,12 @@ module.exports = function (app, passport) {
     app.get('/logout', function (req, res) {
         req.logout();
         res.redirect('/');
+    });
+
+    app.get('/login', function (req, res) {
+
+        res.render('login', { status: "false", message: req.flash('loginMessage') });
+
     });
 
 

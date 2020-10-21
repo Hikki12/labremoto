@@ -4,11 +4,12 @@
 
 <!-- NAV -->
 <%- include("template/nav") %>
-
+<br><br>
 <body>
     <div class="main">
         <p class="sign" align="center">Inicio de sesión</p>
-        <form action="/login" method="post" class="form1">
+        
+        <form action="/login" method="post" >
             <div class="form-group un">
                     
                 <input type="email" class="form-control" placeholder="usuario@utpl.edu.ec"  name="username">
@@ -20,12 +21,17 @@
             <center>
                 <button type="submit" class="btn btn-info btn-lg">Entrar</button>
             </center>
+            <br>
+            <% if (message.length > 0) { %>
+                <div class="alert alert-danger"><%= message %></div>
+            <% } %>
             
             <p class="forgot" align="center"><a href="#">¿Olvidaste tu contraseña?</p>
+                
         </form>
     </div>
 
     <script src="js/login.js"></script>
-
+    <br><br>
     <%- include("template/footer") %>
 </body>

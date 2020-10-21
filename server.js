@@ -55,9 +55,7 @@ app.get('/',function(request,res){
     res.render('index', {title: "salio", usernames: "enseñar", status: "false"});
 });
 
-app.get('/login',function(request,res){
-    res.render('login', {status: "false"});
-});
+
 
 
 
