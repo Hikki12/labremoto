@@ -59,10 +59,6 @@ app.get('/login',function(request,res){
     res.render('login', {status: "false"});
 });
 
-app.get('/project',function(request,res){
-    res.render('project', {status: "false"});
-});
-
 
 
 app.post('/file_upload', upload.any(), function (req, res, next) {
@@ -159,13 +155,16 @@ io.on('connection', (socket)=> {
 app.use(session({
     secret: 'kodizimcomisrunning',
     resave: true,
-    saveUninitialized: true
+	saveUninitialized: true,
+	cookie: { secure: false } // no https so secure is false
  } )); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
-
+// To parse the data of a form
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
 

@@ -49,6 +49,33 @@ module.exports = function (app, passport) {
         
     });
 
+    app.get('/reserva',function(req,res, next){
+        var usernames= '';  
+        var names= ''; 
+        var lastNames= ''; 
+        console.log([req.user.username]);
+        var row = "";
+        row = [req.user.username.replace("@utpl.edu.ec", "")];
+        var rol = "";
+        rol = [req.user.rol]
+        var names2 = "";
+        names2 = [req.user.name]
+        console.log("sdas ", names2);
+        var lastNames2 = "";
+        lastNames2 = [req.user.lastName]
+        console.log([req.user.lastName]);
+        if(rol == "estudiante"){
+            console.log("es estudiante");
+            res.render('reserva', {usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('message') });
+        } else if(rol == "docente"){
+            console.log("es docente");
+            res.render('reserva', {usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('message') });
+            
+        }
+        
+    });
+
+
     app.get('/session', function (req, res) {
         var userName = [];
         console.log(userName);
@@ -66,7 +93,6 @@ module.exports = function (app, passport) {
             
         }
         
-        
     });
 
     app.get('/login', function (req, res) {
@@ -75,16 +101,57 @@ module.exports = function (app, passport) {
 
     });
 
-    app.get('/signup', function (req, res) {
-        res.render('signup', { message: req.flash('message') });
+    app.get('/reservas', function (req, res) {
+        var usernames= '';  
+        var names= ''; 
+        var lastNames= ''; 
+        console.log([req.user.username]);
+        var row = "";
+        row = [req.user.username.replace("@utpl.edu.ec", "")];
+        var rol = "";
+        rol = [req.user.rol]
+        var names2 = "";
+        names2 = [req.user.name]
+        console.log("sdas ", names2);
+        var lastNames2 = "";
+        lastNames2 = [req.user.lastName]
+        console.log([req.user.lastName]);
+        if(rol == "estudiante"){
+            console.log("es estudiante");
+            res.render('reserva', {usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('message') });
+        } else if(rol == "docente"){
+            console.log("es docente");
+            res.render('reserva', {usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('message') });
+            
+        }
     });
 
-    app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect: '/session',
-        failureRedirect: '/signup',
-        failureFlash: true
-    }));
+    app.post("/reserva", (req, res) => {
+        const {name, lastName, email, date, startTime, endTime } = req.body;
+        console.log({ name, lastName, email, date, startTime, endTime });
+        connection.query('INSERT INTO reservations SET? ', { name, lastName, email, date, startTime, endTime }, (err, result) => {
+            res.redirect("/session");
+        });
+    });
 
+    app.get('/signup', function(req, res){
+        res.render('signup',{message: req.flash('message')});
+      });
+
+    /*app.post('/signup', passport.authenticate('local-signup', {
+            successRedirect: '/login',
+            failureRedirect: '/signup',
+            failureFlash : true 
+    }));*/
+    app.post("/signup", (req, res) => {
+        const {lastname, firstname, message } = req.body;
+        console.log({lastname, firstname, message });
+        connection.query('INSERT INTO messages SET?', {firstname, lastname, message}, (err, result) => {
+            res.redirect("/");
+        });
+    });
+
+    
     app.post('/login', passport.authenticate('local-login', {
         successRedirect: '/session',
         failureRedirect: '/login',

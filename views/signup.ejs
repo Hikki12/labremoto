@@ -1,0 +1,91 @@
+<!Doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keyword" content="HTML, CSS, JAVASCRİPT">
+    <meta name="author" content="">
+    <title>Kayıt işlemi</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <!-- load fontawesome -->
+
+    <style>
+        body {
+            padding-top: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="col-sm-6 col-sm-offset-3">
+
+            <h1><span class="fa fa-sign-in"></span> Register</h1>
+
+            
+
+            <!-- LOGIN FORM 
+            <form action="/signup" method="post" class="card-body">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Nombre</label>
+
+                    <input type="text" class="form-control" placeholder="Username" name="name" value="Diego">
+
+                </div>
+                <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Apellido</label>
+
+                    <input type="text" class="form-control" placeholder="Username" name="lastName" value="Pinto">
+
+                </div>
+                <div class="form-group">
+
+                    <input type="text" class="form-control" placeholder="Username" name="username" value="diepintosss@utpl.edu.ec">
+                </div>
+
+                <div class="form-group">
+
+                    <input type="password" class="form-control" placeholder="Password" name="password">
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">rol</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="name" name="rol">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-warning btn-lg">Save</button>
+            </form>-->
+
+            <form action="/signup" method="post" class="offset-3 col-6 mt-5">
+                <div class="form-group">
+                  <label for="lastName">Lastname</label>
+                  <input type="text" name="lastname" class="form-control" id="lastName" aria-describedby="emailHelp" placeholder="Lastname">
+                </div>
+                <div class="form-group">
+                  <label for="firstName">Firstname</label>
+                  <input type="text" name="firstname" class="form-control" id="firstName" placeholder="Firstname">
+                </div>
+                <div class="form-group">
+                  <label for="message">Your message</label>
+                  <textarea name="message" class="form-control" id="message" rows="3" placeholder="Message"></textarea>
+                </div>
+                <button type="submit" class="btn btn-info col-6 offset-3 mb-4">Send my message</button>
+              </form>
+              
+
+            <hr>
+
+            <p>Already have user <a href="/login">login</a></p>
+            <p><a href="/">Home Page</a>.</p>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
