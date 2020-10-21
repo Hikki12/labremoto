@@ -36,7 +36,7 @@ module.exports = function (app, passport) {
         var row = "";
         row = [req.user.username.replace("@utpl.edu.ec", "")];
         var rol = "";
-        rol = [req.user.rol]
+        rol = [req.user.rol];
         console.log([req.user.rol]);
         if (rol == "estudiante") {
             console.log("es estudiante");
@@ -141,18 +141,26 @@ module.exports = function (app, passport) {
 
     app.get('/session', function (req, res) {
         var userName = [];
-        console.log(userName);
-        //res.render('index', {title: "salio", usernames: "enseñar", status: "false"});
-        if ([req.user.username]) {
-            console.log([req.user.username]);
-            console.log("replace user ", [req.user.username.replace("@utpl.edu.ec", "")]);
-            var usernames = req.param('username', null);
-            var row = "";
-            row = [req.user.username.replace("@utpl.edu.ec", "")];
-
-            var logout = '<a href="/logout">Logout</a>';
-            res.render('index.ejs', { title: "mi titulo dinamico", usernames: row, status: "true" });
-        } else {
+        var usernames = '';
+        var names = '';
+        var lastNames = '';
+        console.log([req.user.username]);
+        var row = "";
+        row = [req.user.username.replace("@utpl.edu.ec", "")];
+        var rol = "";
+        rol = [req.user.rol]
+        var names2 = "";
+        names2 = [req.user.name]
+        console.log("sdas ", names2);
+        var lastNames2 = "";
+        lastNames2 = [req.user.lastName]
+        console.log([req.user.lastName]);
+        if (rol == "estudiante") {
+            console.log("es estudiante");
+            res.render('index', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage'), alert: 'ok' });
+        } else if (rol == "docente") {
+            console.log("es docente");
+            res.render('index', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), alert: 'ok' });
 
         }
 

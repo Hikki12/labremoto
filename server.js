@@ -52,7 +52,8 @@ app.use(express.static(path.join(__dirname,'public')));
 
 //Rutas
 app.get('/',function(request,res){
-    res.render('index', {title: "salio", usernames: "enseñar", status: "false"});
+	console.log("asdas");
+    res.render('index', {title: "salio", usernames: "enseñar", status: "false", rol: "ninguno"});
 });
 
 

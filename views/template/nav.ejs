@@ -42,7 +42,9 @@
         <li><a href="#team">Equipo</a></li>
         <%if (status == "true") { %>
           <li><a href="mcu">Maqueta</a></li>
-          <li><a href="reserva">Reserva</a></li>
+          <%if (rol == "estudiante") { %>
+            <li><a href="reserva">Reserva</a></li>
+            <% } %>
           <li class="get-started"><a href="/logout"><%= usernames %></a></li>
           
       <% }else { %>
