@@ -1,0 +1,21 @@
+.estadoActivo {
+    width: 25px;
+     height: 25px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     background: #fff01e;
+}
+
+.estadoOcupado {
+    width: 25px;
+     height: 25px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     background: #bb0a0a;
+}
+
+.entrarA:hover {
+    color: white;
+}

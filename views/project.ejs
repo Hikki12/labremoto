@@ -1,33 +1,83 @@
-<%- include("template/cabecera", {titleWeb: 'login'})  %>
+<%- include("template/cabecera", {titleWeb: 'Proyectos'})  %>
 
-<!-- NAV -->
-<%- include("template/nav") %>
 
 <body>
-    <div class="container">
-            <div class="card text-center">
-                <div class="card-header">
-                    <ul class="nav nav-pills card-header-pills">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Active</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Disabled</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+
+    <main id="main">
+        <!-- NAV -->
+        <%- include("template/nav") %>
+        <!-- ======= Section ======= -->
+        <br>
+        <%if (rol == "estudiante") { %>
+        <link rel="stylesheet" href="/css/styles.css">
+        <link href="css/figura.css" rel="stylesheet">
+        <div class="container-fluid ">
+            <div class="text-center">
+                <h1>Prácticas del Laboratorio Remoto</h1>
+                <i>
+                    <h4>Maquetas disponibles</h4>
+                </i>
+            </div>
+            <br>
+            <hr class="col-sm-10">
+            <div class="row mx-auto p-3">
+                <div class="col-sm-12">
+                    <div class=" row card" style="width: auto; margin: auto auto;">
+                        <div class="card-body">
+                            <h5 class="text-left">Listado de Maquetas: </h5><br>
+                            <div class="card ">
+                                <h5 class="card-header">Maqueta 1</h5>
+                                <div class="card-body ">
+                                    <div class="row card-body" >
+                                        <div class="col-lg-5">
+                                            <h6><i>Estado de uso:</i></h6>
+                                            <div class="row "">
+                                            <div class=" col-lg-2">
+                                                <div class="estadoActivo"></div>
+                                                <i>Libre</i>
+                                            </div>
+                                            <div class=" col-lg-3">
+                                                <div class="estadoOcupado"></div>
+                                                <i>Ocupada</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="col-xl-11"> 
+                                </div>
+                                <div class="card card-body col-lg-12" >
+                                    <h6><i>Descripcion de la maqueta</i></h6>
+                                    <p class="text-justifly"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsum porro eius, illo quis magni maxime voluptatum est velit ex asperiores ab quam ratione dolore cum vero sequi? Hic, dicta!</p>
+                                </div>
+                                <div class=" card-body col-lg-12" >
+                                    <div class="row card-body" >
+                                        <div class="col-lg-1">
+                                            <button class="btn-outline-info btn"><a href="/mcu" class="entrarA">Entrar</a></button>
+                                            </div>
+                                            <div class=" col-lg-3">
+                                                <button type="button" class="btn btn-outline-warning">?</button>
+                                            </div>
+                                            <div class=" col-lg-3">
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional
+                                    content.</p>
+                                <a href="#" class="btn btn-primary">Añadir una nueva maqueta</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-    </div>
+        </div>
+        </div>
 
-    <script src="js/login.js"></script>
-    <%- include("template/footer") %>
+        <% } %>
+    </main>
+
+
 </body>
+<%- include("template/footer") %>

@@ -30,6 +30,69 @@ module.exports = function (app, passport) {
         });
     });
 
+    app.get('/listReserva', function (req, res, next) {
+        var userName = [];
+        var usernames = '';
+        var names = '';
+        var lastNames = '';
+        console.log([req.user.username]);
+        var row = "";
+        row = [req.user.username.replace("@utpl.edu.ec", "")];
+        var rol = "";
+        rol = [req.user.rol]
+        var names2 = "";
+        names2 = [req.user.name]
+        console.log("sdas ", names2);
+        var lastNames2 = "";
+        lastNames2 = [req.user.lastName]
+        console.log([req.user.lastName]);
+        var result = "result"; 
+        connection.query("SELECT * FROM reservations ", function (err, result) {
+        //connection.query("SELECT * FROM reservations ", (err, result) => {
+            console.log(result);
+            if (rol == "estudiante") {
+                console.log("es estudiante");
+                res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage'), data: result });
+            } else if (rol == "docente") {
+                console.log("es docente");
+                res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), data: result });
+            }
+        });
+    });
+
+
+    app.get('/project', function (req, res, next) {
+        var userName = [];
+        var usernames = '';
+        var names = '';
+        var lastNames = '';
+        console.log([req.user.username]);
+        var row = "";
+        row = [req.user.username.replace("@utpl.edu.ec", "")];
+        var rol = "";
+        rol = [req.user.rol]
+        var names2 = "";
+        names2 = [req.user.name]
+        console.log("sdas ", names2);
+        var lastNames2 = "";
+        lastNames2 = [req.user.lastName]
+        console.log([req.user.lastName]);
+        var hoy = new Date();
+        var  hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+        console.log(hora);
+        // comprar si es mayor o igual o mejor igual al valor sino no presenta nada 
+       
+        if (rol == "estudiante") {
+            console.log("es estudiante");
+            res.render('project', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage') });
+        } else if (rol == "docente") {
+            console.log("es docente");
+            res.render('project', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage')});
+        }
+        
+    });
+
+
     app.get('/mcu', function (req, res, next) {
         var usernames = '';
         console.log([req.user.username]);
@@ -64,14 +127,16 @@ module.exports = function (app, passport) {
         var lastNames2 = "";
         lastNames2 = [req.user.lastName]
         console.log([req.user.lastName]);
+        
         if (rol == "estudiante") {
             console.log("es estudiante");
-            res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage'), alert: 'ok' });
+            res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage')});
         } else if (rol == "docente") {
             console.log("es docente");
-            res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), alert: 'ok' });
+            res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage') });
 
         }
+        
 
     });
 
@@ -93,7 +158,7 @@ module.exports = function (app, passport) {
         lastNames2 = [req.user.lastName]
         console.log([req.user.lastName]);
 
-        connection.query("SELECT * FROM reservations WHERE date = ?", [date], function (err, rows) {
+        connection.query("SELECT * FROM reservations WHERE date = ? and startTime = ?  and endTime = ?", [date, startTime, endTime], function (err, rows) {
             if (err)
                 return done(err);
             if (rows.length) {
