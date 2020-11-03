@@ -32,14 +32,21 @@
                                         <div class="col-lg-5">
                                             <h6><i>Estado de uso:</i></h6>
                                             <div class="row "">
-                                            <div class=" col-lg-2">
-                                                <div class="estadoActivo"></div>
-                                                <i>Libre</i>
-                                            </div>
-                                            <div class=" col-lg-3">
+                                            <%if  (satatusModel == "ocupada" || nameStatus == "name") { %>
+                                            <div class=" col-lg-5">
                                                 <div class="estadoOcupado"></div>
                                                 <i>Ocupada</i>
                                             </div>
+                                            <% } else if (satatusModel == "libre" )  { %>
+                                            <div class=" col-lg-5">
+                                                <div class="estadoActivo"></div>
+                                                <i>Libre</i>
+                                            </div>
+                                            <% } %>
+                                            <!-- <div class=" col-lg-5">
+                                                <div class="estadoUso"></div>
+                                                <i>Usando Por usted</i>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <hr class="col-xl-11"> 
@@ -51,7 +58,12 @@
                                 <div class=" card-body col-lg-12" >
                                     <div class="row card-body" >
                                         <div class="col-lg-1">
-                                            <button class="btn-outline-info btn"><a href="/mcu" class="entrarA">Entrar</a></button>
+                                            <%if (dataTime == "si") { %>
+                                                <button class="btn-outline-info btn"><a href="/mcu" class="entrarA">Entrar</a></button>
+                                            <% } %>
+                                            <%if (dataTime == "no") { %>
+                                                <button class="btn-outline-success btn"><a href="/reserva" class="entrarB">Reserva</a></button>
+                                            <% } %>
                                             </div>
                                             <div class=" col-lg-3">
                                                 <button type="button" class="btn btn-outline-warning">?</button>
@@ -63,10 +75,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
-                                <a href="#" class="btn btn-primary">Añadir una nueva maqueta</a>
                         </div>
                     </div>
                 </div>

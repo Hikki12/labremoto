@@ -8,8 +8,9 @@
         <%- include("template/nav") %>
         <!-- ======= Section ======= -->
         <br>
-        <%if (rol == "docente") { %>
+        <%if (rol == "estudiante" || rol == "docente") { %>
         <link rel="stylesheet" href="/css/styles.css">
+        <link href="css/figura.css" rel="stylesheet">
         <div class="container-fluid ">
             <div class="text-center">
                 <h1>Lista de reservas</h1>
@@ -22,31 +23,47 @@
             <div class="row mx-auto p-3">
                 <div class="col-sm-12">
                     <div class=" row card" style="width: auto; margin: auto auto;">
-                        <div class="card-body">
+                        <div class="card-body col-sm-12">
                             <h5 class="text-left">Reservas actuales de la maqueta 1: </h5><br>
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Apellidos</th>
-                                        <th scope="col">Fecha</th>
-                                        <th scope="col">Uso</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for( var i = 0; i < data.length; i++) { %>
-                                        
-                                    <tr>
-                                        <th scope="row"><% data[i].id %></th>
-                                        <td><%= data[i].name %></td>
-                                        <td><%= data[i].lastName %></td>
-                                        <td><%= data[i].date %></td>
-                                        <td><%= data[i].startTime %> - <%= data[i].endTime %></td>
-                                    </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped col-sm-12">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellidos</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Uso</th>
+                                            <th scope="col">Maqueta </th>
+                                            <th scope="col">Entrar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (data2.length > 0){ %>
+                                            <% for( var i = 0; i < data2.length; i++) { %>
+                                                <tr>
+                                                    <th scope="row"><%= data2[i].id %></th>
+                                                    <td><%= data2[i].name %></td>
+                                                    <td><%= data2[i].lastName %></td>
+                                                    <td><%= data2[i].date %></td>
+                                                    <td><%= data2[i].startTime %> - <%= data2[i].endTime %></td>
+                                                    <td><%= data2[i].mockup %></td>
+                                                    <%if (data2[i].time == "si" ) { %>
+                                                    <td><button class="btn-outline-info btn"><a href="/mcu"
+                                                                class="entrarA">Entrar</a></button></td>
+                                                    <% } else if (data2[i].time  == "no" ) { %>
+                                                    <td></td>
+                                                    <% } %>
+                                                </tr>
+                                            <% } %>
+                                        <% } else { %>
+                                            <td colspan="7">No existe alguna reserva </td>
+                                        <% } %>
+    
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,6 +73,8 @@
 
         <% } %>
     </main>
+
+
 
 
 </body>

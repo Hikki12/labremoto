@@ -192,3 +192,10 @@
 	margin-left: -190px;
 
 }
+
+
+@media only screen and (min-width: 400px) {
+	.videos2 {
+		height: 20px;
+	}
+}

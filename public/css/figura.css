@@ -16,6 +16,23 @@
      background: #bb0a0a;
 }
 
+.estadoUso {
+    width: 25px;
+     height: 25px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     background: #25992f;
+}
+
 .entrarA:hover {
+    color: white;
+}
+
+.entrarB {
+    color: green;
+}
+
+.entrarB:hover {
     color: white;
 }

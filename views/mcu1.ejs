@@ -1,0 +1,226 @@
+<%- include("template/cabecera", {titleWeb: 'MCU '})  %>
+
+
+<link href="https://vjs.zencdn.net/5.19/video-js.css" rel="stylesheet">
+
+<body>
+
+    <main id="main">
+        <!-- NAV -->
+        <%- include("template/nav") %>
+        <!-- ======= Section ======= -->
+        <br> 
+        <%if (rol == "estudiante" && dataTime == "si") { %>
+        <link rel="stylesheet" href="/css/styles.css">
+        <div class="container-fluid ">
+            <div class="text-center">
+                <h1>LABORATORIO REMOTO</h1>
+                <i>
+                    <h4>Maqueta C. U.</h4>
+                    <h6>Estudiante</h6>
+                </i>
+            </div>
+            <br>
+            <hr class="col-sm-10">
+            <br>
+            <div class="row mx-auto p-3">
+                <div class="col-sm-6">
+                    <div class=" row card" style="width: auto; margin: auto auto;">
+                        <div class="card-body">
+                            <div class="video-panel p-4">
+                                <img id="video" style="height:430px;width:100%; border: 2px solid rgb(27, 45, 78);" class="videos2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row card" style="width: auto; margin: auto auto;">
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title"><strong> Controles de la maqueta</strong> </h5>
+                                <p class="card-text">
+                                    <i>Seleccione la acción.</i>
+                                </p>
+                            </center>
+                            <br>
+                            <div class="mx-auto p-3 controls-container">
+                                <div class="playButtons-container">
+
+                                    <div class="playpause">
+                                        <input type="checkbox" value="None" id="playpause" name="check" checked="" />
+                                        <label for="playpause" tabindex=1></label>
+                                        <div id="L1">INICIAR</div>
+                                    </div>
+
+                                    <div class="record">
+                                        <input type="checkbox" value="None" id="record" name="check" checked="" />
+                                        <label for="record" tabindex=1></label>
+                                        <div id="L2">GRABAR</div>
+
+                                    </div>
+
+                                    <div id="msg">PRESIONE INICIAR</div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <% } %>
+        <%if (rol == "estudiante" && dataTime == "no") { %>
+            <link href="css/figura.css" rel="stylesheet">
+        <div class="container-fluid ">
+            <div class="text-center">
+                
+                <h1>LABORATORIO REMOTO</h1>
+                <i>
+                    <h4>Maqueta C. U.</h4>
+                </i>
+            </div>
+            <br>
+            <hr class="col-sm-10">
+            <br>
+            <div class="row mx-auto p-3">
+                <div class="col-sm-12">
+                    <div class=" row card" style="width: auto; margin: auto auto;">
+                        <div class="card-body text-center">
+                            <h5>Usted no tiene reserva</h5>
+                            <br>
+                            <i>Si desea reserve tiempo de uso de la maqueta dando clic en siguiente enlance.</i>
+                            <br>
+                            <br>
+                            <button class="btn-outline-success btn"><a href="/reserva" class="entrarB">Reserva</a></button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div><br><br><br><br><br><br><br><br><br><br>
+        <% } %>
+        <%if (rol == "docente") { %>
+        <!-- ======= Section ======= -->
+        <link rel="stylesheet" href="/css/styles3.css">
+        <div class="container-fluid ">
+            <div class="text-center">
+                <h1>LABORATORIO REMOTO </h1>
+                <i>
+                    <h4>Maqueta C. U.</h4>
+                    <h6>Docente</h6>
+                </i>
+            </div>
+            <br>
+            <hr class="col-sm-10">
+            <br>
+            <div class="row mx-auto p-3">
+                <div class="col-sm-6">
+                    <div class=" row card" style="width: auto; margin: auto auto;">
+                        <div class="card-body">
+                            <div class="video-panel p-4">
+                                <img id="video" style="height:430px;width:100%; border: 2px solid rgb(27, 45, 78);" class="videos2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row card" style="width: auto; margin: auto auto;">
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title"><strong> Controles de la maqueta</strong> </h5>
+                                <p class="card-text">
+                                    <i>Seleccione la acción.</i>
+                                </p>
+                            </center>
+                            <br>
+                            <div class="mx-auto p-3 controls-container">
+                                <div class="controls-panel">
+
+
+                                    <div class="container2">
+                                        <ul>
+                                            <li>
+                                                <input type="radio" id="r1" name="selector" checked>
+                                                <label for="r1">R1 = 3cm</label>
+
+                                                <div class="check"></div>
+                                            </li>
+
+                                            <li>
+                                                <input type="radio" id="r2" name="selector">
+                                                <label for="r2">R2 = 6cm</label>
+
+                                                <div class="check">
+                                                    <div class="inside"></div>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <input type="radio" id="r3" name="selector">
+                                                <label for="r3">R3 = 9cm</label>
+
+                                                <div class="check">
+                                                    <div class="inside"></div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="slider-container2">
+                                        <div class="value-container">
+                                            <span id="valueLabel">0.0</span>
+                                            <span id="Units">rpm</span>
+                                        </div>
+                                        <input id="rangeSlider" type="range" min="0" max="200" value="0">
+                                    </div>
+
+                                    <div class="playButtons-container">
+
+                                        <div class="playpause">
+                                            <input type="checkbox" value="None" id="playpause" name="check"
+                                                checked="" />
+                                            <label for="playpause" tabindex=1></label>
+                                            <div id="L1">INICIAR</div>
+                                        </div>
+
+                                        <div class="record">
+                                            <input type="checkbox" value="None" id="record" name="check" checked="" />
+                                            <label for="record" tabindex=1></label>
+                                            <div id="L2">GRABAR</div>
+                                        </div>
+
+                                        <div id="msg">PRESIONE INICIAR</div>
+
+                                        <div class="clockwise">
+                                            <input type="checkbox" value="None" id="clockwise" name="check" />
+                                            <label for="clockwise" tabindex=1></label>
+                                            <div class="curve-arrow"></div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <% } %>
+
+
+
+
+        <script src="js/socket.io.js"></script>
+        <script src="js/main.js"></script>
+    </main>
+
+
+</body>
+<%- include("template/footer") %>

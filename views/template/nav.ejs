@@ -1,20 +1,4 @@
 <!-- Navigation -->
-<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">LabRemoto</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="login">Login</a>
-            <a class="nav-item nav-link" href="mcu">mcu</a>
-            <a class="nav-item nav-link" href="#">More Data</a>
-        </div>
-    </div>
-</nav> 
--->
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top  header-transparent ">
   <div class="container d-flex align-items-center">
@@ -41,23 +25,19 @@
         <li><a href="#benefits">Beneficios</a></li>
         <li><a href="#team">Equipo</a></li>
         <%if (status == "true") { %>
-          <li><a href="mcu">Maqueta</a></li>
           <%if (rol == "estudiante") { %>
             <li><a href="reserva">Reserva</a></li>
             <li><a href="project">Proyectos</a></li>
+            <li ><a href="listReserva">Lista de Reservas</a></li>
           <% }else { %>
+            <li><a href="mcu">Maqueta</a></li>
             <li ><a href="listReserva">Lista de Reservas</a></li>
           <% } %>
-          <li class="get-started"><a href="/logout"><%= usernames %></a></li>
+          <li class="get-started"><a href="/logout"><%= names %></a></li>
           
       <% }else { %>
         <li class="get-started"><a href="login">Inicio de sesión</a></li>
       <% } %>
-        
-        <!-- <li><a href="#faq">F.A.Q</a></li>
-          <li><a href="#contact">Contact Us</a></li> -->
-
-        
       </ul>
     </nav><!-- .nav-menu -->
 
