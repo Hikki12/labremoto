@@ -8,7 +8,7 @@
         <%- include("template/nav") %>
         <!-- ======= Section ======= -->
         <br>
-        <%if (rol == "estudiante") { %>
+        
         <link rel="stylesheet" href="/css/styles.css">
         <link href="css/figura.css" rel="stylesheet">
         <div class="container-fluid ">
@@ -25,45 +25,62 @@
                     <div class=" row card" style="width: auto; margin: auto auto;">
                         <div class="card-body">
                             <h5 class="text-left">Listado de Maquetas: </h5><br>
+                            <% if (rol == "admin") { %>
+                                <button class="btn-outline-info btn">
+                                    <a href="/moreModels" class="entrarA">Añadir más maquetas</a>
+                                </button> <br>
+                            <% } %>
+                            <br>
+
+                            <% for( var i = 0; i < result2.length; i++) { %>
                             <div class="card ">
-                                <h5 class="card-header">Maqueta 1</h5>
+                                <h5 class="card-header"><%= result2[i].nameModel %> </h5>
+                                <input type="text" id="number<%= result2[i].codeModel %>"
+                                    value="<%= result2[i].codeModel %>" style="display: none" />
                                 <div class="card-body ">
-                                    <div class="row card-body" >
+                                    <div class="row card-body">
                                         <div class="col-lg-5">
                                             <h6><i>Estado de uso:</i></h6>
-                                            <div class="row "">
-                                            <%if  (satatusModel == "ocupada" || nameStatus == "name") { %>
-                                            <div class=" col-lg-5">
-                                                <div class="estadoOcupado"></div>
-                                                <i>Ocupada</i>
+                                            <div class="row ">
+
+                                                <script>
+                                                    //obtener valor del id
+                                                    var codeMockup = $('#number<%= result2[i].codeModel %> ').val();
+                                                    console.log("Codigo maqueta HTML: ", codeMockup);
+                                                </script>
+
+                                                <div class=" col-lg-5 statusModel-1"
+                                                    id="statusModel-<%- result2[i].codeModel %>" style="display: none;">
+                                                    <div class='estadoOcupado'></div>
+                                                    <i>Ocupada</i>
+
+                                                </div>
+                                                <div class=" col-lg-5 statusModel2-1"
+                                                    id="statusModel2-<%- result2[i].codeModel %>">
+                                                    <div class="estadoActivo"></div>
+                                                    <i>Libre</i>
+                                                </div>
+
                                             </div>
-                                            <% } else if (satatusModel == "libre" )  { %>
-                                            <div class=" col-lg-5">
-                                                <div class="estadoActivo"></div>
-                                                <i>Libre</i>
-                                            </div>
-                                            <% } %>
-                                            <!-- <div class=" col-lg-5">
-                                                <div class="estadoUso"></div>
-                                                <i>Usando Por usted</i>
-                                            </div> -->
                                         </div>
+                                        <hr class="col-xl-11">
                                     </div>
-                                    <hr class="col-xl-11"> 
-                                </div>
-                                <div class="card card-body col-lg-12" >
-                                    <h6><i>Descripcion de la maqueta</i></h6>
-                                    <p class="text-justifly"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsum porro eius, illo quis magni maxime voluptatum est velit ex asperiores ab quam ratione dolore cum vero sequi? Hic, dicta!</p>
-                                </div>
-                                <div class=" card-body col-lg-12" >
-                                    <div class="row card-body" >
-                                        <div class="col-lg-1">
-                                            <%if (dataTime == "si") { %>
-                                                <button class="btn-outline-info btn"><a href="/mcu" class="entrarA">Entrar</a></button>
-                                            <% } %>
-                                            <%if (dataTime == "no") { %>
-                                                <button class="btn-outline-success btn"><a href="/reserva" class="entrarB">Reserva</a></button>
-                                            <% } %>
+                                    <div class="card card-body col-lg-12">
+                                        <h6><i>Descripcion de la maqueta</i></h6>
+                                        <p class="text-justifly"><%= result2[i].description %></p>
+                                    </div>
+                                    <div class=" card-body col-lg-12">
+                                        <div class="row card-body">
+                                            <div class="col-lg-1">
+                                                <button class="btn-outline-info btn" id="entrar-<%- result2[i].codeModel %>" style="display: none;">
+                                                    <a href="<%= result2[i].urlMaqueta %>" class="entrarA">Entrar</a>
+                                                </button>
+
+                                                <button class="btn-outline-success btn" id="reservar-<%- result2[i].codeModel %>">
+                                                    <a href="/reserva" class="entrarB">Reserva</a>
+                                                </button>
+                                                
+
                                             </div>
                                             <div class=" col-lg-3">
                                                 <button type="button" class="btn btn-outline-warning">?</button>
@@ -75,16 +92,53 @@
                                     </div>
                                 </div>
                             </div>
+                            <br>
+
+                        <% } %>
                         </div>
+                        <% for( var j = 0; j < result.length; j++) { %>
+                        <script>
+
+                            var fecha = "";
+                            var hoy = new Date();
+                            var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+                            var fechaDia = hoy.getDate();
+                            var fechaDia2 = "";
+                            if (fechaDia < 10) {
+                                fechaDia2 = "0" + fechaDia;
+                                fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + fechaDia2;
+                            } else {
+                                fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate();
+                            }
+                            var mockup2 = '<%- result[j].mockup %>';
+                            var date3 = '<%- result[j].date %>';
+                            var startTime2 = '<%- result[j].startTime %>';
+                            var endTime2 = '<%- result[j].endTime %>';
+                            var email2 = '<%- result[j].email %>'.replace("@utpl.edu.ec", "");
+                            var userApp = '<%= usernames %>';
+                            console.log(userApp);
+
+                            if (fecha == date3 && hora >= startTime2 && hora <= endTime2) {
+                                console.log("---", codeMockup);
+                                console.log("---___", mockup2);
+                                console.log("wiii");
+                                console.log("ocupada");
+                                $("#statusModel2-" + mockup2).hide();
+                                $("#statusModel-" + mockup2).show();
+                                if(email2 == userApp){
+                                    console.log("siii");
+                                    $("#entrar-" + mockup2).show();
+                                    $("#reservar-" + mockup2).hide();
+                                }
+                            } 
+                        </script>
+                        <% } %>
                     </div>
                 </div>
             </div>
-
         </div>
-        </div>
-
-        <% } %>
-    </main>
+    </div>
+</main>
 
 
 </body>

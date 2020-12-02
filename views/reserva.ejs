@@ -79,8 +79,9 @@
                                     <label for="mockup2" class="col-2 col-form-label">Maqueta </label>
                                     <div class="col-10">
                                         <select class="form-control form-control-sm" id="mockup" name="mockup" required>
-                                            <option value="mcu-01">Maqueta 1</option>
-                                            
+                                            <% for( var i = 0; i < result2.length; i++) { %>
+                                                <option value="<%= result2[i].codeModel %>"><%= result2[i].nameModel %></option>
+                                            <% } %>
                                         </select required>
                                     </div>
                                 </div>
@@ -90,6 +91,7 @@
                                     <div class="col-10">
                                         <select class="form-control form-control-sm" id="startTime" name="startTime" required>
                                             <option>Seleccione...</option>
+                                            <option>07:00:00</option>
                                             <option>08:00:00</option>
                                             <option>09:00:00</option>
                                             <option>10:00:00</option>
@@ -104,6 +106,10 @@
                                             <option>19:00:00</option>
                                             <option>20:00:00</option>
                                             <option>21:00:00</option>
+                                            <option>22:00:00</option>
+                                            <option>23:00:00</option>
+                                            <option>00:00:00</option>
+
                                         </select >
                                     </div>
                                 </div>
@@ -112,6 +118,7 @@
                                     <div class="col-10">
                                         <select class="form-control form-control-sm" id="endTime" name="endTime" required>
                                             <option>Seleccione...</option>
+                                            <option>07:00:00</option>
                                             <option>08:00:00</option>
                                             <option>09:00:00</option>
                                             <option>10:00:00</option>
@@ -126,6 +133,9 @@
                                             <option>19:00:00</option>
                                             <option>20:00:00</option>
                                             <option>21:00:00</option>
+                                            <option>22:00:00</option>
+                                            <option>23:00:00</option>
+                                            <option>00:00:00</option>
                                         </select >
                                         
                                     </div>

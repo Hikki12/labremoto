@@ -8,7 +8,7 @@
         <%- include("template/nav") %>
         <!-- ======= Section ======= -->
         <br>
-        <%if (rol == "estudiante" || rol == "docente") { %>
+        <%if (rol == "estudiante" || rol == "docente" || rol == "admin") { %>
         <link rel="stylesheet" href="/css/styles.css">
         <link href="css/figura.css" rel="stylesheet">
         <div class="container-fluid ">
@@ -24,7 +24,7 @@
                 <div class="col-sm-12">
                     <div class=" row card" style="width: auto; margin: auto auto;">
                         <div class="card-body col-sm-12">
-                            <h5 class="text-left">Reservas actuales de la maqueta 1: </h5><br>
+                            <h5 class="text-left">Reservas actuales de las maquetas: </h5><br>
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped col-sm-12">
                                     <thead>
@@ -48,16 +48,19 @@
                                                     <td><%= data2[i].date %></td>
                                                     <td><%= data2[i].startTime %> - <%= data2[i].endTime %></td>
                                                     <td><%= data2[i].mockup %></td>
-                                                    <%if (data2[i].time == "si" ) { %>
+                                                    <%if (data2[i].time == "si" && data2[i].mockup == "mcu-01" ) { %>
                                                     <td><button class="btn-outline-info btn"><a href="/mcu"
                                                                 class="entrarA">Entrar</a></button></td>
+                                                    <% } else if (data2[i].time == "si" && data2[i].mockup == "mcu-02" ) { %>
+                                                        <td><button class="btn-outline-success btn"><a href="/mcu2"
+                                                                class="entrarB">Entrar</a></button></td>
                                                     <% } else if (data2[i].time  == "no" ) { %>
                                                     <td></td>
                                                     <% } %>
                                                 </tr>
                                             <% } %>
                                         <% } else { %>
-                                            <td colspan="7">No existe alguna reserva </td>
+                                            <td colspan="7">No existe ninguna reserva. </td>
                                         <% } %>
     
                                     </tbody>
