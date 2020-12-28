@@ -1,167 +1,570 @@
 <%- include("template/cabecera", {titleWeb: 'MCU '})  %>
-
-
 <link href="https://vjs.zencdn.net/5.19/video-js.css" rel="stylesheet">
-
+<link href="/css/figura.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/LoadingScreen-2.css">
 <body>
-
     <main id="main">
         <!-- NAV -->
         <%- include("template/nav") %>
         <!-- ======= Section ======= -->
-        <br> 
-        
-        
-            <div class="container-fluid ">
-                <div class="text-center">
-                    <h1>LABORATORIO REMOTO</h1>
-                    <i>
-                        <h4>Maqueta C. U.</h4>
-                        <%if (rol == "estudiante") { %>
-                            <link rel="stylesheet" href="css/stylesE.css">
-                            <h6>Estudiante - <%= names %> <%= lastNames %></h6>
+        <br>
+        <div class="container-fluid ">
+            <div class="text-center">
+                <h1>LABORATORIO REMOTO</h1>
+                <i>
+                    <h4>Maqueta C. U.</h4>
+                    <%if (rol == "estudiante") { %>
+                    <link rel="stylesheet" href="css/stylesE.css">
+                    <h6>Estudiante - <%= names %> <%= lastNames %></h6>
+                        <%if (rol == "estudiante" && dataTime == "si") { %>
+                            <input type="text" id="codeModel" value="mcu-01" style="display: none;" />
+                            <button class="btn-info btn">
+                                <a href="" class="terminarPractica" data-toggle="modal" data-target="#modalLoginForm">
+                                    Terminar práctica
+                                </a>
+                            </button>
                         <% } %>
-                        <%if (rol == "docente") { %>
-                            <link rel="stylesheet" href="css/stylesD.css">
-                            <h6>Docente - <%= names %> <%= lastNames %></h6>
-                        <% } %>
-                    </i>
-                </div>
-                <br>
-                <hr class="col-sm-10">
-                <br>
-                <div class="row mx-auto p-3">
-                    <div class="col-sm-6">
-                        <div class=" row card" style="width: auto; margin: auto auto;">
-                            <div class="card-body"> 
-                                <div class="video-panel p-4">
-                                    <img id="video" style="height:430px;width:100%; border: 2px solid rgb(27, 45, 78);" class="videos2">
-                                    <div class="light__container">
-                                        <input id="lightBtn" type="checkbox">
-                                        <label for="lightBtn"></label>              
-                                    </div>   
+                    <% } %>
+                    <%if (rol == "docente" || rol == "admin") { %>
+                    <link rel="stylesheet" href="css/stylesD.css">
+                    <h6>Docente - <%= names %> <%= lastNames %></h6>
+                    <% } %>
+                </i>
+                
+            </div>
+            <br>
+            <hr class="col-sm-10">
+            <br>
+            <div class="row mx-auto p-3">
+                <div class="col-sm-6">
+                    <div class=" row card" style="width: auto; margin: auto auto;">
+                        <div class="card-body">
+                            <div class="video-panel p-4">
+                                <img id="video" style="height:430px;width:100%; border: 2px solid rgb(27, 45, 78);"
+                                    class="videos2">
+                                <div class="light__container">
+                                    <input id="lightBtn" type="checkbox">
+                                    <label for="lightBtn"></label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="row card" style="width: auto; margin: auto auto;">
-                            <div class="card-body">
-                                <center>
-                                    <h5 class="card-title"><strong> Controles de la maqueta</strong> </h5>
-                                    <p class="card-text">
-                                        <i>Seleccione la acción.</i>
-                                    </p>
-                                </center>
-                                <br>
-                                <%if (rol == "estudiante" && dataTime == "si") { %>
-                                    <div class="mx-auto p-3 controls-container">
-                                        <div class="controls-panel">
-                                            <div class="play__box">
-            
-                                                <div class="play__container">
-                                                    <input id="playBtn" type="checkbox" value="None">
-                                                    <label for="playBtn" tabindex=1></label>  
-                                                    <div class = "labelBtn">INCIAR</div>         
-                                                </div>
-                                    
-                                                <div class="record__container">
-                                                    <input id="recordBtn" type="checkbox">
-                                                    <label for="recordBtn"></label>
-                                                    <div class = "labelBtn">GRABAR</div>          
-                                                </div>
-            
-                                            </div>
-                                            <div id="msg">PRESIONE INICIAR</div>
-                                        </div>
-                                    </div>
-                                    <script src="js/mainE.js"></script>  
-                                <% } else if (rol == "estudiante" && dataTime == "no") { %>
-                                    <div class="mx-auto p-3 controls-container">
-                                            <div class="controls-panel">
-                                            <h5>Usted no tiene reserva</h5>
-                                            <br>
-                                            <i>Si desea reserve tiempo de uso de la maqueta dando clic en siguiente enlance.</i>
-                                            <br>
-                                            <br>
-                                            <button class="btn-outline-success btn"><a href="/reserva" class="entrarB">Reserva</a></button>
-                                        </div>
-                                    </div>
-                                <% } %>
-                                <%if (rol == "docente") { %>
-                                    <div class="mx-auto p-3 controls-container">
-                                        <div class="controls-panel">
-                                            <div class="clockwise__container">
-                                                <input id="clockwiseBtn" type="checkbox">
-                                                <label for="clockwiseBtn"></label>
-                                                <div class="curve-arrow"></div>
-                                            </div>
-            
-                                            <div class="radios__container">
-                                                <div class="radios__container--button">
-                                                    <input type="radio" id="r1Btn" name="selector" checked>
-                                                    <label for="r1Btn">R = 3cm</label>
-                                                    <div class="check"></div>
-                                                </div>
-                                                <div class="radios__container--button">
-                                                    <input type="radio" id="r2Btn" name="selector">
-                                                    <label for="r2Btn">R = 6cm</label>
-                                                    <div class="check"></div>
-                                                </div>
-                                                <div class="radios__container--button">
-                                                    <input type="radio" id="r3Btn" name="selector">
-                                                    <label for="r3Btn">R = 9cm</label>
-                                                    <div class="check"></div>
-                                                </div>
-            
-                                            </div>
-            
-                                            <!-- <div class="slider-container2"> -->
-                                            <div class="slider__container">
-                                                <div class="slider__container--label-container">
-                                                    <span id="sliderLabelValue">0.0</span>
-                                                    <!-- <span id="sliderLabelUnits">rpm</span>                                             -->
-                                                </div>
-                                                <input id="speedSlider" class="rs-range" type="range" step="1" min="0" max="200"
-                                                    value=0>
-                                                <div class="box-minmax">
-                                                    <span>0</span><span>60</span>
-                                                </div>
-                                            </div>
-            
-                                            <div class="play__box">
-            
-                                                <div class="play__container">
-                                                    <input id="playBtn" type="checkbox" value="None">
-                                                    <label for="playBtn" tabindex=1></label>
-                                                    <div class="labelBtn">INCIAR</div>
-                                                </div>
-            
-                                                <div class="record__container">
-                                                    <input id="recordBtn" type="checkbox">
-                                                    <label for="recordBtn"></label>
-                                                    <div class="labelBtn">GRABAR</div>
-                                                </div>
-            
-                                            </div>
-                                            <div id="msg">PRESIONE INICIAR</div>
-                                            <div class="recordTime__container">
-                                                <span>Record Time (seg): </span>
-                                                <input type="number" value="20" id="timeInput" name="tentacles" min="10" max="100">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <script src="js/mainD.js"></script>  
-                                <% } %>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row card" style="width: auto; margin: auto auto;">
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title"><strong> Controles de la maqueta</strong> </h5>
+                                <p class="card-text">
+                                    <i>Seleccione la acción.</i>
+                                </p>
+                            </center>
+                            <br>
+                            <%if (rol == "estudiante" && dataTime == "si") { %>
+                            <div class="mx-auto p-3 controls-container">
+                                <div class="controls-panel">
+                                    <div class="play__box">
 
+                                        <div class="play__container">
+                                            <input id="playBtn" type="checkbox" value="None">
+                                            <label for="playBtn" tabindex=1></label>
+                                            <div class="labelBtn">INCIAR</div>
+                                        </div>
+
+                                        <div class="record__container">
+                                            <input id="recordBtn" type="checkbox">
+                                            <label for="recordBtn"></label>
+                                            <div class="labelBtn">GRABAR</div>
+                                        </div>
+
+                                    </div>
+                                    <div id="msg">PRESIONE INICIAR</div>
+                                </div>
                             </div>
+                            <script src="js/mainE.js"></script>
+                            <% } else if (rol == "estudiante" && dataTime == "no") { %>
+                            <div class="mx-auto p-3 controls-container">
+                                <div class="controls-panel">
+                                    <h5>Usted no tiene reserva</h5>
+                                    <br>
+                                    <i>Si desea reserve tiempo de uso de la maqueta dando clic en siguiente enlance.</i>
+                                    <br>
+                                    <br>
+                                    <button class="btn-outline-success btn"><a href="/reserva"
+                                            class="entrarB">Reserva</a></button>
+                                </div>
+                            </div>
+                            <% } %>
+                            <%if (rol == "docente" || rol == "admin") { %>
+                            <div class="mx-auto p-3 controls-container">
+                                <div class="controls-panel">
+                                    <div class="clockwise__container">
+                                        <input id="clockwiseBtn" type="checkbox">
+                                        <label for="clockwiseBtn"></label>
+                                        <div class="curve-arrow"></div>
+                                    </div>
+
+                                    <div class="radios__container">
+                                        <div class="radios__container--button">
+                                            <input type="radio" id="r1Btn" name="selector" checked>
+                                            <label for="r1Btn">R = 3cm</label>
+                                            <div class="check"></div>
+                                        </div>
+                                        <div class="radios__container--button">
+                                            <input type="radio" id="r2Btn" name="selector">
+                                            <label for="r2Btn">R = 6cm</label>
+                                            <div class="check"></div>
+                                        </div>
+                                        <div class="radios__container--button">
+                                            <input type="radio" id="r3Btn" name="selector">
+                                            <label for="r3Btn">R = 9cm</label>
+                                            <div class="check"></div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- <div class="slider-container2"> -->
+                                    <div class="slider__container">
+                                        <div class="slider__container--label-container">
+                                            <span id="sliderLabelValue">0.0</span>
+                                            <!-- <span id="sliderLabelUnits">rpm</span>                                             -->
+                                        </div>
+                                        <input id="speedSlider" class="rs-range" type="range" step="1" min="0" max="200"
+                                            value=0>
+                                        <div class="box-minmax">
+                                            <span>0</span><span>60</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="play__box">
+
+                                        <div class="play__container">
+                                            <input id="playBtn" type="checkbox" value="None">
+                                            <label for="playBtn" tabindex=1></label>
+                                            <div class="labelBtn">INCIAR</div>
+                                        </div>
+
+                                        <div class="record__container">
+                                            <input id="recordBtn" type="checkbox">
+                                            <label for="recordBtn"></label>
+                                            <div class="labelBtn">GRABAR</div>
+                                        </div>
+
+                                    </div>
+                                    <div id="msg">PRESIONE INICIAR</div>
+                                    <div class="recordTime__container">
+                                        <span>Record Time (seg): </span>
+                                        <input type="number" value="20" id="timeInput" name="tentacles" min="10"
+                                            max="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <script src="js/mainD.js"></script>
+                            <% } %>
+
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <script src="js/socket.io.js"></script>
     </main>
 
+    <!--Modal para finalizar la practica.-->
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Finalizar práctica</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <div id="error-500" style="display:none">
+                            <!--<img img src="/assets/img/error-500.png" style="width: 60%; height: 70%">-->
+                        </div>
+                        <center>
+                            <p>Tener en cuenta lo siguiente:</p>
+                            <p class="text-justify"><i>Al finalizar la práctica ustedes tiene que realizar una pequeña
+                                    evaluación para determinar su conocimiento adquiro de esta práctica.</i></p>
+                            <hr>
+                            <strong><i>Esta seguro de finalizar la práctica antes de hora.</i> </strong><br>
+                            <br>
+                            <div class="col-sm-">
+                                <button class="btn-danger btn col-sm-5">
+                                    <a href="" class="entrarDelete" data-toggle="modal" data-target="#modalQuizz">Finalizar</a>
+                                </button>
+                                <button type="button" class="btn btn-warning waves-effect ml-auto col-sm-5"
+                                    data-dismiss="modal">
+                                    Cerrar
+                                </button>
+                            </div>
+                        </center>
+                    </div>
 
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- modal de Quizz-->
+    <div class="modal fade" id="modalQuizz" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabels" data-target="#staticBackdrop" data-backdrop="static" data-keyboard="false"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Encuesta de finalización de práctica</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        
+                        <center>
+                            <p>Tener en cuenta lo siguiente:</p>
+                            <p class="text-justify"><i>A continuación se presenta varias preguntas de la practica.</i></p>
+                            <div id="quiz"></div>
+                            <br>
+                            <div class="col-sm-">
+                                <button class="btn-danger btn col-sm-5" onclick="myFunction()">
+                                    Calificar
+                                </button>
+                                <button type="button" class="btn btn-warning waves-effect ml-auto col-sm-5" data-dismiss="modal">
+                                    Cerrar
+                                </button>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de resultado de quizz -->
+    <div class="modal" tabindex="-1" role="dialog" id="modalMensaje" data-backdrop="static" data-keyboard="false"
+    aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title badge badge-success">Resultado de la evaluación</h5>
+            </div>
+            <div class="modal-body">
+              <center>
+                <p id="mensaje"></p>
+                <form class="col-md-10" action="/SaveEncuestaPractica" method="POST">
+                    <div class="form-group row">
+                        <label for="name2" class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="name" value="<%= names %>"
+                                name="name" style="display: none;">
+                            <input type="text" class="form-control" placeholder="name" value="<%= names %>"
+                                name="name2" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lastName2" class="col-sm-2 col-form-label">Apellido</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="name"
+                                value="<%= lastNames %>" name="lastName" style="display: none;">
+                            <input disabled type="text" class="form-control" placeholder="name"
+                                value="<%= lastNames %>" name="lastName2">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail2" class="col-sm-2 col-form-label">email</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="name"
+                                value="<%= usernames %>@utpl.edu.ec" name="email" style="display: none;">
+                            <input disabled type="text" class="form-control" placeholder="name"
+                                value="<%= usernames %>@utpl.edu.ec" name="email2">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="date2" class="col-2 col-form-label">Date</label>
+                        <div class="col-10" id="dateResult">
+                            <input disabled type="text" id="date" class="form-control" name="date2">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="date3" class="col-3 col-form-label">Resultado</label>
+                        <div class="col-9" id="quizResult">
+                            <input disabled type="text" id="result" class="form-control" name="result">
+                        </div>
+                    </div>
+                    <center>
+                        <button type="submit" class="btn btn-outline-success btn-lg">Añadir</button>
+                    </center>
+
+                </form>
+            </center>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger">
+                    <a href="/project"
+                        class="entrarDelete">Guarda Resultado</a>
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <div id="loading-screen" style="display:none">
+        <img src="/assets/img/spinning-circles.svg">
+    </div>
+    <!--<script src="js/questions.js"></script>-->
+    <script>
+        var screen = $('#loading-screen');
+        configureLoadingScreen(screen);
+
+        //obtener valor del id
+        var codeModel = $('#codeModel').val();
+        console.log(codeModel);
+
+        var urlData  = "../data/data2.json";
+        var i = 0;
+
+        
+        console.log('cardando URL');
+        $.ajax({
+            url: urlData,
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data, textStatus, xhr) {
+                
+                var div = '';
+                console.log('Toda los Datos registrados')
+                for ( var x in data) {
+                    var type = data[x].type;
+                    var id = data[x].id;
+                    var statement = data[x].statement;
+                    div += '<hr><div class="form-group row">'+
+                    '<label class="col-sm-12 text-left">'+ statement +' </label>';
+                    if (type == "text"){
+                        div += '<div class="col-sm-10">'+
+                        '<input type="text" class="form-control" placeholder="su respuesta es..." value="" name="text'+x+'" id="text'+x+'">'+
+                        '</div></div>';
+                    } else if (type == "check"){
+                        var trueCheck = 0;
+                        var falseCheck = 0;
+                        div += '<div class="form-check col-sm-2">';
+                        for (var i in data[x].answers) {
+                            var value = data[x].answers[i].value;
+                            var correct = data[x].answers[i].correct;
+                            var ij = i + 1;
+                            div += '<input class="form-check-input" type="checkbox" name="exampleChecks'+x+'"  value="'+ correct +'">'+
+                                '<label class="form-check-label">   '+
+                                + value +
+                                '</label> <br>';
+                            if (correct.toString() == "true") {
+                                trueCheck = trueCheck + 1;
+                                
+                            } else if(correct.toString() == "false"){
+                                falseCheck = falseCheck + 1;
+                            }
+                            
+                            i++; 
+                        }
+                        div += '</div></div>';
+                        div += '<input type="text" class="form-control" id="trueCheck'+x+'" value="'+ trueCheck +'" style="display: none;">';
+                        div += '<input type="text" class="form-control" id="falseCheck'+x+'" value="'+ falseCheck +'" style="display: none;">';
+                        
+                    } else if (type == "radio"){
+                        div += '<div class="form-check col-sm-2">';
+                        for (const i in data[x].answers) {
+                            var value = data[x].answers[i].value;
+                            var correct = data[x].answers[i].correct;
+                            var ij = i + 1;
+                            div += '<input class="form-check-input" type="radio" id="inlineRadio'+x+'" name="exampleRadios'+x+'" value="'+ correct +'">'+
+                                '<label class="form-check-label for="inlineRadio'+x+'"> '+
+                                + value +
+                                '</label> <br>';
+                                
+                        }
+                        div += '</div></div>';
+                    }
+                    x++;
+                };//end for
+
+                //total de preguntas:
+                var total = x - 1;
+                div += '<input type="text" class="form-control" id="totalPreguntas" value="'+ total +'" style="display: none;">';
+                
+                $("#quiz").append(div);
+            },
+            error: function (data) {
+                alert('Error');
+                $("#error-500").show();
+            }
+        });//end ajax
+
+    function configureLoadingScreen(screen){
+        $(document)
+            .ajaxStart(function () {
+                screen.fadeIn();
+            })
+            .ajaxStop(function () {
+                screen.fadeOut();
+            });
+    }
+    function myFunction() { 
+
+        $("#modalLoginForm").modal('hide');
+        
+        //obtener valor de totalPreguntas
+        var totalPreguntas = $('#totalPreguntas').val();
+        const valorPregunta = (10/totalPreguntas).toFixed(2);
+        console.log("valorPregunta ", valorPregunta);
+
+        var hoy = new Date();
+        var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+        var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getDate();
+        console.log(fecha, " -- ", hora);
+
+        var textValue = "";
+        var checkBox = "";
+        var radioBox = "";
+
+        var sumaText = 0;
+        var sumaCheck = 0;
+        var sumaCheck2 = 0;
+        var sumaRadio = 0;
+        var sumaRadio2 = 0;
+        var sumaCheckResta = 0;
+        var sumaCheckResta2 = 0;
+
+        var urlData  = "../data/data2.json";
+        var i = 0;
+        console.log('cardando URL');
+        $.ajax({
+            url: urlData,
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data, textStatus, xhr) {
+                var div = '';
+                console.log('Toda los Datos para calificar')
+                for ( var x in data) {
+                    var type = data[x].type;
+                    var id = data[x].id;
+                    var statement = data[x].statement;
+                    console.log("id- ", x);
+
+                    if (type == "text"){
+                        //obtener valor del id
+                        var texto = "#text" + x;
+                        textValue = $(texto).val();
+                        for (var i in data[x].answers) {
+                            var value = data[x].answers[i].value;
+                            if (textValue == value){
+                                sumaText = parseFloat(sumaText) + parseFloat(valorPregunta);
+                            }
+                        }
+                        
+                    } else if (type == "check"){
+                        //obtener valor de trueCheck y falseCheck
+                        var trueCheck = $('#trueCheck'+x).val();
+                        var trueCheckResult = (valorPregunta/trueCheck).toFixed(2);
+                        console.log("trueCheckResult ", trueCheckResult);
+                        var checkLength = data[x].answers.len
+                        for (var i in data[x].answers) {
+                            var value = data[x].answers[i].value;
+                            var correct = data[x].answers[i].correct;
+                            var arr = $('[name="exampleChecks'+x+'"]:checked').map(function(){
+                                return this.value;
+                            }).get();
+                                
+                        }
+                        console.log("div ",trueCheckResult);
+                        for (const i in arr){
+                            if(arr[i]== "true"){
+                                sumaCheck = parseFloat(sumaCheck) + parseFloat(trueCheckResult);
+                            } else if (arr[i]== "false"){
+                                sumaCheckResta = parseFloat(sumaCheckResta) + parseFloat(trueCheckResult);
+                            }
+                        }
+
+                    } else if (type == "radio"){
+                        var sumaRadioForx = 0;
+                        for (const i in data[x].answers) {
+                            var value = data[x].answers[i].value;
+                            var correct = data[x].answers[i].correct;
+                            radioBox = $('input:radio[name=exampleRadios'+x+']:checked').val();
+                        }
+                        if (radioBox == "true"){
+                            sumaRadio = parseFloat(sumaRadio) + parseFloat(valorPregunta);
+                        }
+                    }
+                    x++;  
+                    
+                };//end for
+                
+                // suma radio
+                sumaRadio2 = parseFloat(sumaRadio2) + parseFloat(sumaRadio);
+                console.log("sumaRadio2: ", sumaRadio2);
+                // suma Check
+                sumaCheck2 = parseFloat(sumaCheck2) + parseFloat(sumaCheck);
+                console.log("sumaCheck2: ", sumaCheck2);
+                // suma sumaCheckResta
+                sumaCheckResta2 = parseFloat(sumaCheckResta2) + parseFloat(sumaCheckResta);
+                console.log("sumaCheckResta2: ", sumaCheckResta2);
+
+
+                var suma = 0;
+                var totalSuma = 0;
+                // total del resultado
+                suma = sumaRadio2 + sumaCheck2+ sumaText;
+                console.log("suma: ", suma);
+                totalSuma  = suma - sumaCheckResta;
+
+                //total de preguntas:
+                var total = x - 1;
+
+                // presentación del resultado
+                if (totalSuma > 6) {
+                    MENSAJE = "Su Calificación es de "+ totalSuma.toFixed(1) + "/10<br> Exente Trabajo...! :)";
+                    $("#mensaje").html(MENSAJE);
+                } else {
+                    MENSAJE = "Su Calificación es de "+ totalSuma + "/10<br> Mejora para la siguiente ... :(";
+                    $("#mensaje").html(MENSAJE);
+                }
+                
+                var resultDiv = '<input type="text" class="form-control" name="result"  value="'+totalSuma.toFixed(1)+'/10" style="display: none;">';
+                var resultDate = '<input type="text" class="form-control" name="date"  value="'+fecha+' / '+ hora+'" style="display: none;">';
+                
+                var valueResult = "";
+                valueResult = totalSuma.toFixed(1);
+                var valueDate = "";
+                valueDate = fecha+' / '+ hora;
+
+                console.log("valueResult ",valueResult);
+                console.log("valueDate ", valueDate);
+
+                $("#result").val(valueResult);
+                $("#date").val(valueDate);
+
+                $("#dateResult").append(resultDate);
+                $("#quizResult").append(resultDiv);
+
+                $("#modalMensaje").modal('show');
+                $("#modalQuizz").modal('hide');
+                
+            },
+            error: function (data) {
+                alert('Error');
+                $("#error-500").show();
+            }
+            
+        });//end ajax
+    }    
+    </script>
 </body>
 <%- include("template/footer") %>

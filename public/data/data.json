@@ -1,0 +1,94 @@
+{
+  "1": {
+    "type": "radio",
+    "id": "1",
+    "statement": "Alg\u00fan enunciado",
+    "answers": {
+      "1": {
+        "value": 2,
+        "correct": false
+      },
+      "2": {
+        "value": 3,
+        "correct": true
+      },
+      "3": {
+        "value": 5,
+        "correct": false
+      },
+      "4": {
+        "value": 7,
+        "correct": false
+      }
+    }
+  },
+  "2": {
+    "type": "radio",
+    "id": "1",
+    "statement": "Alg\u00fan enunciado",
+    "answers": {
+      "1": {
+        "value": 2,
+        "correct": false
+      },
+      "2": {
+        "value": 3,
+        "correct": true
+      },
+      "3": {
+        "value": 5,
+        "correct": false
+      },
+      "4": {
+        "value": 7,
+        "correct": false
+      }
+    }
+  },
+  "3": {
+    "type": "radio",
+    "id": "1",
+    "statement": "Alg\u00fan enunciado",
+    "answers": {
+      "1": {
+        "value": 2,
+        "correct": false
+      },
+      "2": {
+        "value": 3,
+        "correct": true
+      },
+      "3": {
+        "value": 5,
+        "correct": false
+      },
+      "4": {
+        "value": 7,
+        "correct": false
+      }
+    }
+  },
+  "4": {
+    "type": "radio",
+    "id": "1",
+    "statement": "Alg\u00fan enunciado",
+    "answers": {
+      "1": {
+        "value": 2,
+        "correct": false
+      },
+      "2": {
+        "value": 3,
+        "correct": true
+      },
+      "3": {
+        "value": 5,
+        "correct": false
+      },
+      "4": {
+        "value": 7,
+        "correct": false
+      }
+    }
+  }
+}

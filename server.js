@@ -5,7 +5,6 @@ const app = express();
 const bodyParser = require('body-parser')
 var multer  = require('multer')
 
-
 var dbconfig = require('./config/database');
 var mysql = require('mysql');
 var connection = mysql.createConnection(dbconfig.connection);
@@ -14,6 +13,7 @@ var cookieParser = require('cookie-parser');
 var morgan = require('morgan');
 var passport = require('passport');
 var flash    = require('connect-flash');
+const { publicDecrypt } = require('crypto');
 require('./config/passport.js')(passport); 
 
 app.use(morgan('dev')); // log every request to the console
@@ -23,7 +23,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
-
 
 
 
@@ -47,8 +46,16 @@ app.set('port',process.env.PORT||3000);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
+
 //static files
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'/public')));
+app.use(express.static(__dirname + '/public'));
+
+// obtiene la ruta del directorio publico donde se encuentran los elementos estaticos (css, js).
+var publicPath = path.resolve(__dirname, '/public'); //path.join(__dirname, 'public'); también puede ser una opción
+
+// Para que los archivos estaticos queden disponibles.
+app.use(express.static(publicPath));
 
 //Rutas
 app.get('/',function(request,res){

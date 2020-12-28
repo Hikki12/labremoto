@@ -65,77 +65,76 @@ module.exports = function (app, passport) {
         var mockup2 = "";
         var result2 = [];
         connection.query("SELECT * FROM reservations ", function (err, result) {
-            //connection.query("SELECT * FROM reservations ", (err, result) => {
-            console.log(result);
-            if (rol == "estudiante") {
-                for (var i = 0; i < result.length; i++) {
-                    nameList = result[i].name;
-                    lastNameList = result[i].lastName;
-                    email2 = result[i].email;
-                    date2 = result[i].date;
-                    startTime2 = result[i].startTime;
-                    endTime2 = result[i].endTime;
-                    mockup2 = result[i].mockup;
-                    
-                    
-                    if (usernames == email2) {
-                        if (fecha == date2 && hora >= startTime2 && hora <= endTime2) {
+            connection.query("SELECT * FROM listProject ", function (err, resultList) {
+                //connection.query("SELECT * FROM reservations ", (err, result) => {
+                console.log(result);
+                if (rol == "estudiante") {
+                    for (var i = 0; i < result.length; i++) {
+                        idReserva = result[i].id;
+                        nameList = result[i].name;
+                        lastNameList = result[i].lastName;
+                        email2 = result[i].email;
+                        date2 = result[i].date;
+                        startTime2 = result[i].startTime;
+                        endTime2 = result[i].endTime;
+                        mockup2 = result[i].mockup;
+                        
+                        
+                        if (fecha == date2 ) {
                             console.log("sesion2");
                             console.log(startTime2);
-                            result2.push({ name: nameList, lastName: lastNameList, date: date2, startTime: startTime2, endTime: endTime2 , mockup: mockup2, time: "si"},);
-                        } else if (fecha == date2) {
-                            console.log("sesion3");
-                            console.log(startTime2);
-                            result2.push({ name: nameList, lastName: lastNameList, date: date2, startTime: startTime2, endTime: endTime2 , mockup: mockup2, time: "no"},);
-                        }
+                            result2.push({ hora: hora, fecha: fecha, idReserva: idReserva, name: nameList, lastName: lastNameList, email: email2, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2},);
+                        } 
                     }
-                }
-                console.log(result2);
-                console.log("es estudiante");
-                
-                res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage'), data2: result2 , dataTime2: "no",});
-            } else if (rol == "docente") {
-                console.log("es docente");
-
-                for (var i = 0; i < result.length; i++) {
-                    nameList = result[i].name;
-                    lastNameList = result[i].lastName;
-                    email2 = result[i].email;
-                    date2 = result[i].date;
-                    startTime2 = result[i].startTime;
-                    endTime2 = result[i].endTime;
-                    mockup2 = result[i].mockup;
+                    console.log(result2);
+                    console.log("es estudiante");
                     
-                    if (fecha == date2 ) {
-                        console.log("sesion2");
-                        console.log(startTime2);
-                        result2.push({ name: nameList, lastName: lastNameList, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2, time: "no" },);
-                    } 
-                }
-                res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), data2: result2, dataTime2: "si" });
-            } else if (rol == "admin") {
-                console.log("es admin");
-
-                for (var i = 0; i < result.length; i++) {
-                    nameList = result[i].name;
-                    lastNameList = result[i].lastName;
-                    email2 = result[i].email;
-                    date2 = result[i].date;
-                    startTime2 = result[i].startTime;
-                    endTime2 = result[i].endTime;
-                    mockup2 = result[i].mockup;
+                    res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage'), data2: result2, resultList: resultList, dataTime2: "no",});
                     
-                    if (fecha == date2 ) {
-                        console.log("sesion2");
-                        console.log(startTime2);
-                        result2.push({ name: nameList, lastName: lastNameList, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2, time: "no" },);
-                    } 
+                } else if (rol == "docente") {
+                    console.log("es docente");
+
+                    for (var i = 0; i < result.length; i++) {
+                        idReserva = result[i].id;
+                        nameList = result[i].name;
+                        lastNameList = result[i].lastName;
+                        email2 = result[i].email;
+                        date2 = result[i].date;
+                        startTime2 = result[i].startTime;
+                        endTime2 = result[i].endTime;
+                        mockup2 = result[i].mockup;
+                        
+                        if (fecha == date2 ) {
+                            console.log("sesion2");
+                            console.log(startTime2);
+                            result2.push({ hora: hora, fecha: fecha, idReserva: idReserva, name: nameList, lastName: lastNameList, email: email2, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2 },);
+                        } 
+                    }
+                    res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), data2: result2, resultList: resultList, dataTime2: "si" });
+                } else if (rol == "admin") {
+                    console.log("es admin");
+
+                    for (var i = 0; i < result.length; i++) {
+                        idReserva = result[i].id;
+                        nameList = result[i].name;
+                        lastNameList = result[i].lastName;
+                        email2 = result[i].email;
+                        date2 = result[i].date;
+                        startTime2 = result[i].startTime;
+                        endTime2 = result[i].endTime;
+                        mockup2 = result[i].mockup;
+                        
+                        if (fecha == date2 ) {
+                            console.log("sesion2");
+                            console.log(startTime2);
+                            result2.push({ hora: hora, fecha: fecha, idReserva: idReserva, name: nameList, lastName: lastNameList, email: email2, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2 },);
+                        } 
+                    }
+                    res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "admin", message: req.flash('ReservaMessage'), data2: result2, resultList: resultList, dataTime2: "si" });
                 }
-                res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "admin", message: req.flash('ReservaMessage'), data2: result2, dataTime2: "si" });
-            }
+            });
         });
     });
-
 
     app.get('/project', function (req, res, next) {
         var userName = [];
@@ -217,8 +216,6 @@ module.exports = function (app, passport) {
                             mockupStatus = {codeModels: mockup2, satatusModels: "ocupada", nameStatuss: "name",  userNameStatus: email2}   
                         }
 
-                        console.log(mockupStatus);
-                        list = {mockupStatus: mockupStatus}
                     }
                 res.render('project', {usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), result2: result2, result: result});
                 });
@@ -247,7 +244,6 @@ module.exports = function (app, passport) {
         });
               
     });
-
 
     app.get('/mcu', function (req, res, next) {
         var userName = [];
@@ -321,6 +317,21 @@ module.exports = function (app, passport) {
                         } 
                     }
                     res.render('mcu', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente",  dataTime: "no"});
+                } else if (rol == "admin") {
+                    console.log("es admin");
+    
+                    for (var i = 0; i < result.length; i++) {
+                        email2 = result[i].email;
+                        date2 = result[i].date;
+                        startTime2 = result[i].startTime;
+                        endTime2 = result[i].endTime;
+                        if (fecha == date2 ) {
+                            if (usernames == email2) {
+                                time = "si";
+                            }
+                        } 
+                    }
+                    res.render('mcu', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "admin",  dataTime: "no"});
                 }
         });
         
@@ -390,42 +401,135 @@ module.exports = function (app, passport) {
         console.log(hora);
         console.log(fecha);
         console.log("desde el from: ",date);
-        connection.query("SELECT * FROM reservations WHERE date = ? and startTime = ?  and endTime = ? and mockup = ?", [date, startTime, endTime, mockup], function (err, rows) {
-            if (err)
-                return done(err);
-            if (rows.length) {
-                alert2 = req.flash('ReservaMessage', 'Esta acupada la maqueta para esta fecha y hora.');
-                res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Esta acupada la maqueta para esta fecha y hora.' });
-            } else {
-                if(date >= fecha){
-                    var hora2 = hora.replace(":00:00", "");
-                    
-                    if(startTime < endTime){
-                        var startTimeRest = startTime.replace(":00:00", "");
-                        var endTimeRest = endTime.replace(":00:00", "");
-                        var timeRest = endTimeRest - startTimeRest;
-                        var timeResult = 1
-                        console.log("la resta es: ", timeRest);
-                        if (timeRest == timeResult){
-                            connection.query('INSERT INTO reservations SET? ', { name, lastName, email, date, startTime, endTime, mockup }, (err, result) => {
-                                res.redirect("/project");
-                            });
-                        } else {
-                            res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Error, el máximo tiempo de uso puede ser una hora.' });
-                        }
-                        
-                    } else {
-                        res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Error, la hora de ingreso debe ser menor que la de salida' });
-                    }
-                         
+        connection.query("SELECT * FROM listProject ", function (err, result2) {
+            connection.query("SELECT * FROM reservations WHERE date = ? and startTime = ?  and endTime = ? and mockup = ?", [date, startTime, endTime, mockup], function (err, rows) {
+                if (err)
+                    return done(err);
+                if (rows.length) {
+                    alert2 = req.flash('ReservaMessage', 'Esta acupada la maqueta para esta fecha y hora.');
+                    res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Esta acupada la maqueta para esta fecha y hora.', result2: result2 });
                 } else {
-                    res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Error, la fecha esta fuera de rango. Debe de ser superior o la actual al día' });
+                    if(date >= fecha){
+                        var hora2 = hora.replace(":00:00", "");
+                        if(startTime < endTime){
+                            var startTimeRest = startTime.replace(":00:00", "");
+                            var endTimeRest = endTime.replace(":00:00", "");
+                            var timeRest = endTimeRest - startTimeRest;
+                            var timeResult = 1
+                            console.log("la resta es: ", timeRest);
+                            var CountName = "";
+                            connection.query("SELECT COUNT(name) AS CountName FROM reservations WHERE email = ? and date = ? ", [email, date], function (err, rows2) {
+                                for (var i = 0; i < rows2.length; i++) {
+                                    CountName = rows2[i].CountName;
+                                }
+                                console.log("CountName: ", CountName);
+
+                                if (CountName < 2) {
+                                    if (timeRest == timeResult){
+                                        connection.query('INSERT INTO reservations SET? ', { name, lastName, email, date, startTime, endTime, mockup }, (err, result) => {
+                                            res.redirect("/project");
+                                        });
+                                    } else {
+                                        res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Error, el máximo tiempo de uso puede ser una hora.', result2: result2 });
+                                    }
+                                } else {
+                                    res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Error, el usted ya tiene una reserva, solo se puede realizar dos reservas en el día.', result2: result2 });
+                                }
+                            });
+                            
+                            
+                            
+                        } else {
+                            res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Error, la hora de ingreso debe ser menor que la de salida', result2: result2 });
+                        }
+                            
+                    } else {
+                        res.render('reserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Error, la fecha esta fuera de rango. Debe de ser superior o la actual al día', result2: result2 });
+                    }
                 }
-            }
+            });
         });
 
     });
 
+
+    app.get('/encuestaPractica', function (req, res, next) {
+        var usernames = '';
+        var names = '';
+        var lastNames = '';
+        console.log([req.user.username]);
+        var row = "";
+        row = [req.user.username.replace("@utpl.edu.ec", "")];
+        var rol = "";
+        rol = [req.user.rol]
+        var names2 = "";
+        names2 = [req.user.name]
+        console.log("sdas ", names2);
+        var lastNames2 = "";
+        lastNames2 = [req.user.lastName]
+        console.log([req.user.lastName]);
+        var result3 = [];
+        connection.query("SELECT * FROM listProject ", function (err, result2) {
+
+
+            if (rol == "estudiante") {
+
+                for (var i = 0; i < result2.length; i++) {
+                    id = result2[i].id;
+                    codeModel = result2[i].codeModel;
+                    codeModel2 = result2[i].codeModel.replace("-", "");
+                    result3.push({ id: id, codeModel: codeModel, codeModel2: codeModel2},);
+                    
+                }
+                console.log("es estudiante");
+                res.render('encuestaPractica', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage'), result2: result3});
+            } else if (rol == "docente") {
+                console.log("es docente");
+                res.render('encuestaPractica', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), result2: result2 });
+            } else if (rol == "admin") {
+                console.log("es admin");
+                res.render('encuestaPractica', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "admin", message: req.flash('ReservaMessage'), result2: result2 });
+            }
+        });
+
+
+    });
+
+    // post guardar SaveEncuestaPractica
+    app.post("/SaveEncuestaPractica",(req, res) =>   {
+        const datFrom = req.body;
+        console.log(datFrom);
+        connection.query('INSERT INTO testResult SET ? ', [datFrom], (err, result) => {
+            res.redirect("/project");
+        });
+    });
+
+    // post actualizar maquetas
+    app.post("/updateModels/:id",(req, res) =>   {
+        const idUpdate = req.params.id;
+        const datFrom = req.body;
+        connection.query('UPDATE listProject SET ? WHERE id = ? ', [ datFrom, idUpdate], (err, result) => {
+            res.redirect("/project");
+        });
+    });
+
+    // elimnar maqueta
+    app.get('/deleteModels/:id', function (req, res, next) {
+        var idUpdate = req.params.id;
+        console.log(idUpdate);
+        connection.query("DELETE FROM listProject WhERE id = ? ", [idUpdate], function (err, result2) {
+            res.redirect("/project");
+        });
+    });
+
+    // elimnar Reserva
+    app.get('/deleteReserva/:id', function (req, res, next) {
+        var idUpdate = req.params.id;
+        console.log(idUpdate);
+        connection.query("DELETE FROM reservations WhERE id = ? ", [idUpdate], function (err, result2) {
+            res.redirect("/listReserva");
+        });
+    });
 
     // añadir más maquetas
     app.get('/moreModels', function (req, res, next) {
@@ -476,20 +580,10 @@ module.exports = function (app, passport) {
         lastNames2 = [req.user.lastName]
         console.log([req.user.lastName]);
 
-        connection.query("SELECT * FROM listProject WHERE codeModel = ? and urlMaqueta = ? ", [codeModel, urlMaqueta], function (err, rows) {
-            if (err)
-                return done(err);
-            if (rows.length) {
-                alert2 = req.flash('ReservaMessage', 'Esta maqueta ya esta registrada');
-                res.render('moreModels', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: 'Esta maqueta ya esta registrada'});
-            } else {
-                
-                connection.query('INSERT INTO listProject SET? ', { codeModel, nameModel, subtitlesModel, description, urlMaqueta}, (err, result) => {
-                    res.redirect("/project");
-                });
-                        
-            }
+        connection.query('INSERT INTO listProject SET? ', { codeModel, nameModel, subtitlesModel, description, urlMaqueta}, (err, result) => {
+            res.redirect("/project");
         });
+               
 
     });
 

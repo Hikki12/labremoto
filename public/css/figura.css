@@ -25,6 +25,31 @@
      background: #25992f;
 }
 
+
+.entrarUpdate {
+    color: black;
+}
+
+.terminarPractica {
+    color: white;
+}
+
+.terminarPractica:hover {
+    color: white;
+}
+
+.entrarDelete {
+    color: white;
+}
+
+.entrarUpdate:hover {
+    color: white;
+}
+
+.entrarDelete:hover {
+    color: black;
+}
+
 .entrarA:hover {
     color: white;
 }

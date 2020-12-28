@@ -36,49 +36,83 @@
                                             <th scope="col">Uso</th>
                                             <th scope="col">Maqueta </th>
                                             <th scope="col">Entrar</th>
+                                            <th scope="col">Eliminar</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <% if (data2.length > 0){ %>
                                             <% for( var i = 0; i < data2.length; i++) { %>
                                                 <tr>
-                                                    <th scope="row"><%= data2[i].id %></th>
+                                                    <th scope="row"><%= i+1 %></th>
                                                     <td><%= data2[i].name %></td>
                                                     <td><%= data2[i].lastName %></td>
                                                     <td><%= data2[i].date %></td>
                                                     <td><%= data2[i].startTime %> - <%= data2[i].endTime %></td>
                                                     <td><%= data2[i].mockup %></td>
-                                                    <%if (data2[i].time == "si" && data2[i].mockup == "mcu-01" ) { %>
-                                                    <td><button class="btn-outline-info btn"><a href="/mcu"
-                                                                class="entrarA">Entrar</a></button></td>
-                                                    <% } else if (data2[i].time == "si" && data2[i].mockup == "mcu-02" ) { %>
-                                                        <td><button class="btn-outline-success btn"><a href="/mcu2"
-                                                                class="entrarB">Entrar</a></button></td>
-                                                    <% } else if (data2[i].time  == "no" ) { %>
-                                                    <td></td>
-                                                    <% } %>
+                                                    <td>
+                                                        <% if ( data2[i].fecha == data2[i].date && data2[i].hora >= data2[i].startTime && data2[i].hora <= data2[i].endTime) { %>
+                                                            <% for( var j = 0; j < resultList.length; j++) { %>
+                                                                <% if ( data2[i].mockup == resultList[j].codeModel ) { %>
+                                                                    <button class="btn-outline-primary btn" id="entrar-<%- data2[i].idReserva %>-" >
+                                                                        <a href="<%= resultList[j].urlMaqueta %>" class="entrarA">Entrar</a>
+                                                                    </button>
+                                                                <% } %>
+                                                            <% } %>
+                                                        <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn-danger btn">
+                                                            <a href="" class="entrarDelete" data-toggle="modal"
+                                                                data-target="#modalDeleteForm<%- data2[i].idReserva %>">Eliminar</a>
+                                                        </button>
+                                                    <td>  
                                                 </tr>
+                                            
+                                                <!-- modal para alerta de eliminación-->
+                                                <div class="modal fade" id="modalDeleteForm<%- data2[i].idReserva %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered " role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header text-center">
+                                                                <h4 class="modal-title w-100 font-weight-bold">Eliminar Maqueta</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body mx-3">
+                                                                <div class="md-form mb-5">
+                                                                    <center>
+                                                                        <p class="text-justify"><i>Está seguro que desea eliminar la reserva de "<strong><%= data2[i].lastName %>, <%= data2[i].name %></strong>" de fecha de reserva de <strong><%= data2[i].date %></strong> y de tiempo de uso de <%= data2[i].startTime %> - <%= data2[i].endTime %></i></p><br>
+                                                                        <div class="col-sm-">
+                                                                            <button class="btn-danger btn col-sm-5">
+                                                                                <a href="/deleteReserva/<%- data2[i].idReserva  %>"
+                                                                                    class="entrarDelete">Eliminar</a>
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-warning waves-effect ml-auto col-sm-5"
+                                                                                data-dismiss="modal">
+                                                                                Cancelar
+                                                                            </button>
+                                                                        </div>
+                                                                    </center>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             <% } %>
                                         <% } else { %>
-                                            <td colspan="7">No existe ninguna reserva. </td>
+                                            <td colspan="8">No existe ninguna reserva. </td>
                                         <% } %>
-    
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
         <% } %>
     </main>
-
-
-
-
 </body>
 <%- include("template/footer") %>
