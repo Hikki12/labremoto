@@ -85,6 +85,7 @@ module.exports = function (app, passport) {
                         nameList = result[i].name;
                         lastNameList = result[i].lastName;
                         email2 = result[i].email;
+                        emailUser = email2.replace("@utpl.edu.ec", "");
                         date2 = result[i].date;
                         startTime2 = result[i].startTime;
                         endTime2 = result[i].endTime;
@@ -94,13 +95,13 @@ module.exports = function (app, passport) {
                         if (fecha == date2 ) {
                             console.log("sesion2");
                             console.log(startTime2);
-                            result2.push({ hora: hora, fecha: fecha, idReserva: idReserva, name: nameList, lastName: lastNameList, email: email2, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2},);
+                            result2.push({ hora: hora, fecha: fecha, idReserva: idReserva, name: nameList, lastName: lastNameList, email: email2, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2, emailUser: emailUser},);
                         } 
                     }
                     console.log(result2);
                     console.log("es estudiante");
                     
-                    res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage'), data2: result2, resultList: resultList, dataTime2: "no",});
+                    res.render('listReserva', { usernames2: usernames, usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "estudiante", message: req.flash('ReservaMessage'), data2: result2, resultList: resultList, dataTime2: "no",});
                     
                 } else if (rol == "docente") {
                     console.log("es docente");
@@ -110,6 +111,7 @@ module.exports = function (app, passport) {
                         nameList = result[i].name;
                         lastNameList = result[i].lastName;
                         email2 = result[i].email;
+                        emailUser = email2.replace("@utpl.edu.ec", "");
                         date2 = result[i].date;
                         startTime2 = result[i].startTime;
                         endTime2 = result[i].endTime;
@@ -118,10 +120,10 @@ module.exports = function (app, passport) {
                         if (fecha == date2 ) {
                             console.log("sesion2");
                             console.log(startTime2);
-                            result2.push({ hora: hora, fecha: fecha, idReserva: idReserva, name: nameList, lastName: lastNameList, email: email2, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2 },);
+                            result2.push({ hora: hora, fecha: fecha, idReserva: idReserva, name: nameList, lastName: lastNameList, email: email2, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2, emailUser: emailUser },);
                         } 
                     }
-                    res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), data2: result2, resultList: resultList, dataTime2: "si" });
+                    res.render('listReserva', { usernames2: usernames, usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "docente", message: req.flash('ReservaMessage'), data2: result2, resultList: resultList, dataTime2: "si" });
                 } else if (rol == "admin") {
                     console.log("es admin");
 
@@ -130,6 +132,7 @@ module.exports = function (app, passport) {
                         nameList = result[i].name;
                         lastNameList = result[i].lastName;
                         email2 = result[i].email;
+                        emailUser = email2.replace("@utpl.edu.ec", "");
                         date2 = result[i].date;
                         startTime2 = result[i].startTime;
                         endTime2 = result[i].endTime;
@@ -138,10 +141,10 @@ module.exports = function (app, passport) {
                         if (fecha == date2 ) {
                             console.log("sesion2");
                             console.log(startTime2);
-                            result2.push({ hora: hora, fecha: fecha, idReserva: idReserva, name: nameList, lastName: lastNameList, email: email2, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2 },);
+                            result2.push({ hora: hora, fecha: fecha, idReserva: idReserva, name: nameList, lastName: lastNameList, email: email2, date: date2, startTime: startTime2, endTime: endTime2, mockup: mockup2, emailUser: emailUser },);
                         } 
                     }
-                    res.render('listReserva', { usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "admin", message: req.flash('ReservaMessage'), data2: result2, resultList: resultList, dataTime2: "si" });
+                    res.render('listReserva', { usernames2: usernames, usernames: row, names: names2, lastNames: lastNames2, status: "true", rol: "admin", message: req.flash('ReservaMessage'), data2: result2, resultList: resultList, dataTime2: "si" });
                 }
             });
         });
