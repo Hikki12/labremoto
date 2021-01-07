@@ -249,13 +249,23 @@
                             var hoy = new Date();
                             var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
                             var fechaDia = hoy.getDate();
+                            var fechaMes = hoy.getMonth() + 1;
                             var fechaDia2 = "";
-                            if (fechaDia < 10) {
-                                fechaDia2 = "0" + fechaDia;
-                                fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + fechaDia2;
+                            var fechaMes2 = "";
+                            // Dia
+                            if (fechaDia < 10){
+                                fechaDia2 = "0"+ fechaDia;
                             } else {
-                                fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate();
+                                fechaDia2 = fechaDia;
                             }
+                            // Mes
+                            if (fechaMes < 10){
+                                fechaMes2 = "0"+ fechaMes;
+                            } else {
+                                fechaMes2 = fechaMes;
+                            }
+                            // Fecha actual
+                            var fecha = hoy.getFullYear() + '-' + fechaMes2 + '-' + fechaDia2;
                             var mockup2 = '<%- result[j].mockup %>';
                             var date3 = '<%- result[j].date %>';
                             var startTime2 = '<%- result[j].startTime %>';

@@ -42,16 +42,27 @@ module.exports = function (app, passport) {
         console.log("sdas ", names2);
         lastNames2 = [req.user.lastName]
         console.log([req.user.lastName]);
+        
         var hoy = new Date();
         var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
         var fechaDia = hoy.getDate();
+        var fechaMes = hoy.getMonth() + 1;
         var fechaDia2 = "";
+        var fechaMes2 = "";
+        // Dia
         if (fechaDia < 10){
             fechaDia2 = "0"+ fechaDia;
-            var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + fechaDia2;
         } else {
-            var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getDate();
+            fechaDia2 = fechaDia;
         }
+        // Mes
+        if (fechaMes < 10){
+            fechaMes2 = "0"+ fechaMes;
+        } else {
+            fechaMes2 = fechaMes;
+        }
+        // Fecha actual
+        var fecha = hoy.getFullYear() + '-' + fechaMes2 + '-' + fechaDia2;
         
         console.log(hora);
         console.log(fecha);
@@ -156,13 +167,23 @@ module.exports = function (app, passport) {
         var hoy = new Date();
         var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
         var fechaDia = hoy.getDate();
+        var fechaMes = hoy.getMonth() + 1;
         var fechaDia2 = "";
+        var fechaMes2 = "";
+        // Dia
         if (fechaDia < 10){
             fechaDia2 = "0"+ fechaDia;
-            var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + fechaDia2;
         } else {
-            var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getDate();
+            fechaDia2 = fechaDia;
         }
+        // Mes
+        if (fechaMes < 10){
+            fechaMes2 = "0"+ fechaMes;
+        } else {
+            fechaMes2 = fechaMes;
+        }
+        // Fecha actual
+        var fecha = hoy.getFullYear() + '-' + fechaMes2 + '-' + fechaDia2;
         
         console.log(hora);
         console.log(fecha);
@@ -265,14 +286,23 @@ module.exports = function (app, passport) {
         var hoy = new Date();
         var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
         var fechaDia = hoy.getDate();
-        console.log(fechaDia);
+        var fechaMes = hoy.getMonth() + 1;
         var fechaDia2 = "";
+        var fechaMes2 = "";
+        // Dia
         if (fechaDia < 10){
             fechaDia2 = "0"+ fechaDia;
-            var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + fechaDia2;
         } else {
-            var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getDate();
+            fechaDia2 = fechaDia;
         }
+        // Mes
+        if (fechaMes < 10){
+            fechaMes2 = "0"+ fechaMes;
+        } else {
+            fechaMes2 = fechaMes;
+        }
+        // Fecha actual
+        var fecha = hoy.getFullYear() + '-' + fechaMes2 + '-' + fechaDia2;
         
         console.log(hora);
         console.log(fecha);
@@ -391,15 +421,26 @@ module.exports = function (app, passport) {
         var hoy = new Date();
         var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
         var fechaDia = hoy.getDate();
+        var fechaMes = hoy.getMonth() + 1;
         var fechaDia2 = "";
+        var fechaMes2 = "";
+        // Dia
         if (fechaDia < 10){
             fechaDia2 = "0"+ fechaDia;
-            var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + fechaDia2;
         } else {
-            var fecha = hoy.getFullYear() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getDate();
+            fechaDia2 = fechaDia;
         }
+        // Mes
+        if (fechaMes < 10){
+            fechaMes2 = "0"+ fechaMes;
+        } else {
+            fechaMes2 = fechaMes;
+        }
+        // Fecha actual
+        var fecha = hoy.getFullYear() + '-' + fechaMes2 + '-' + fechaDia2;
+
         console.log(hora);
-        console.log(fecha);
+        console.log("Fecha back: ", fecha);
         console.log("desde el from: ",date);
         connection.query("SELECT * FROM listProject ", function (err, result2) {
             connection.query("SELECT * FROM reservations WHERE date = ? and startTime = ?  and endTime = ? and mockup = ?", [date, startTime, endTime, mockup], function (err, rows) {
