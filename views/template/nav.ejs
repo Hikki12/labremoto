@@ -27,10 +27,10 @@
         <%if (status == "true") { %>
           <%if (rol == "estudiante" || rol == "admin") { %>
             <li><a href="reserva">Reserva</a></li>
-            <li><a href="project">Proyectos</a></li>
+            <li><a href="project">Maquetas</a></li>
             <li ><a href="listReserva">Lista de Reservas</a></li>
           <% }else if (rol == "docente"){ %>
-            <li><a href="mcu">Maqueta</a></li>
+            <li><a href="project">Maquetas</a></li>
             <li ><a href="listReserva">Lista de Reservas</a></li>
           <% } %>
           <li class="get-started"><a href="/logout"><%= names %></a></li>

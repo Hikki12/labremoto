@@ -1,14 +1,36 @@
+function Timer(callback, delay) {
+    var timerId, remaining = delay;
+
+    this.pause = function() {
+        window.clearInterval(timerId);
+    };
+
+    this.resume = function() {
+        window.clearInterval(timerId);
+        timerId = window.setInterval(callback, remaining);
+    };
+
+    this.resume();
+}
+
+
 const socket = io.connect();
 
 let userName = "";
 let maquetaId = "MAQUETA-MCU";
+let response = false;
 
 // SocketIO routes
 const streaming_route = "stream video";
+const identify_route = "identify maqueta";
+const connection_user_route = "new user";
 const updates_to_web_route = "updates to web";
 const updates_to_maqueta_route = "updates to maqueta";
-const request_updates_route = "request updates"
-
+const request_updates_route = "request updates";
+const stream_control = "stream control";
+const quiz_route = "quiz route";
+const response_route_maqueta = "response to maqueta";
+const response_route_web = "response to web";
 
 // Video Element for update frames
 var img = document.getElementById("video");
@@ -34,8 +56,6 @@ var timeInput = document.getElementById("timeInput");
 // VARIABLES ================================================================================ 
 
 var radio = 1;
-
-
 var variables = {
 				'ID': maquetaId,
 				'Mode':false,
@@ -51,37 +71,110 @@ var variables = {
 				'Busy': true
 				 }
 
+var backup = JSON.parse(JSON.stringify(variables));
 // FUNCTIONS ===========================================================================
 
 // new user is created so we generate nickname and emit event
 const newUserConnected = (user) => {
   userName = user || `User${Math.floor(Math.random() * 1000000)}`;
   socket.emit("new user", userName, maquetaId);
+  console.log(userName, maquetaId);
 };
 
+const dataBackup = ()=>{
+	backup = JSON.parse(JSON.stringify(variables));
+} 
 
-const updateVariables = () => {
-variables = {
-				'ID': maquetaId,
-				'Mode':false,
-				'Radio': radio,
-				'RPM': 0.3*(speedSlider.value),
-				'Steps': parseInt(speedSlider.value),
-			    'PlayState': !playBtn.checked,
-				'Recording': recordBtn.checked,
-				'RecordingAvailable':!recordBtn.checked,
-				'DirState': !dirBtn.checked,
-				'LightState':lightBtn.checked,
-				'RecordingTime': timeInput.value,
-				'Busy': socket.connected
-				 }
+const restoreBackup = ()=>{
+	variables = JSON.parse(JSON.stringify(backup));
+} 
+//
 
-	socket.emit(updates_to_maqueta_route,variables);
-	console.log(variables);
-
+const lockControls = ()=>{
+	playBtn.disabled = true;
+	recordBtn.disabled = true;
+	r1Btn.disabled = true;
+	r2Btn.disabled = true;
+	r3Btn.disabled = true;
+	speedSlider.disabled = true;
+	dirBtn.disabled = true;
+	timeInput.disabled = true;
 }
 
-const reciveUpdates = (variables) => {
+const unlockControls = ()=>{
+	playBtn.disabled = false;
+	recordBtn.disabled = false;
+	r1Btn.disabled = false;
+	r2Btn.disabled = false;
+	r3Btn.disabled = false;
+	speedSlider.disabled = false;
+	dirBtn.disabled = false;
+	timeInput.disabled = false;
+}
+
+///
+
+var check_count = 0;
+
+const checkResponse = function() {
+
+	if(response){
+		console.log("Respuesta ok");
+		timer.pause();
+		unlockControls();
+		return 
+	}
+	else{
+		check_count++;
+		console.log(check_count);
+		if(check_count>=4){
+			restoreBackup();
+			reciveUpdates(variables)
+			unlockControls();
+			check_count = 0
+			timer.pause();			
+		}
+		return
+	}
+}
+
+var timer = new Timer(checkResponse, 250);
+timer.pause();
+
+
+const downloadFiles = ()=> {
+	const fileName = "default.mp4";
+
+    axios({
+        method: 'get',
+        url: 'http://localhost:3000/downloadFiles',
+        responseType: 'blob',
+        headers: {},
+        })
+        .then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+        })
+        .catch((error) => {
+            alert(error);
+        })
+}
+
+const updateVariables = () => {
+	console.log(variables);
+	dataBackup();
+	lockControls();
+	socket.emit(updates_to_maqueta_route, variables);
+	timer.resume();
+}
+
+const reciveUpdates = (data) => {
+	variables = JSON.parse(JSON.stringify(data));
+	console.log("Received: ", variables);
 	playBtn.checked = !Boolean(variables.PlayState);
 	recordBtn.checked = Boolean(variables.Recording);
 	lightBtn.checked = Boolean(variables.LightState);
@@ -101,7 +194,10 @@ const reciveUpdates = (variables) => {
 	//slider
 	speedSlider.value = parseInt(variables.Steps);
 	speedLabel.innerHTML = (0.3*speedSlider.value).toFixed(1);
-	recordBtn.disabled = !Boolean(variables.RecordingAvailable)
+	
+	// if(!recordBtn.checked){
+	// 	downloadFiles();
+	// }
 
 }
 	
@@ -110,36 +206,54 @@ const reciveUpdates = (variables) => {
 // BUTTONS EVENTS =====================================================================
 
 dirBtn.addEventListener('input',()=>{
+	variables["DirState"] = !Boolean(dirBtn.checked);
 	updateVariables();
 })
 
 lightBtn.addEventListener('input',()=>{
+	variables["LightState"] = Boolean(lightBtn.checked);
 	updateVariables();
 })
 
 playBtn.addEventListener('input',()=>{
+	if(!playBtn.checked){
+		msg.innerHTML = "PRESIONER GRABAR";
+	}
+	variables["PlayState"] = !Boolean(playBtn.checked);
 	updateVariables();
 });
 
 recordBtn.addEventListener('input',()=>{
+	console.log("Record: ", recordBtn.checked);
+	if(playBtn.checked){
+		recordBtn.checked = false;
+		msg.innerHTML = "PRESIONE INICIAR";
+	}
+	variables["Recording"] = Boolean(recordBtn.checked);
+
 	if(recordBtn.checked){
-		recordBtn.disabled = true;
+		msg.innerHTML = "GRABANDO...";
+		lockControls();
+		setTimeout(unlockControls, 5000);
 	}
 	updateVariables();
 });
 
 r1Btn.addEventListener('input',()=>{
 	radio = 1;
+	variables["Radio"] = radio;
 	updateVariables();
 });
 
 r2Btn.addEventListener('input',()=>{
 	radio = 2;
+	variables["Radio"] = radio;
 	updateVariables();
 });
 
 r3Btn.addEventListener('input',()=>{
 	radio = 3;
+	variables["Radio"] = radio;
 	updateVariables();
 });
 
@@ -149,25 +263,41 @@ speedSlider.addEventListener('input', ()=>{
 });
 
 speedSlider.addEventListener('change', ()=>{
+	variables["Steps"] = parseInt(speedSlider.value);
+	variables["RPM"] = (0.3*speedSlider.value).toFixed(1);
 	updateVariables();
 });
 
 timeInput.addEventListener('input',()=>{
+	variables["RecordingTime"] = parseInt(timeInput.value);
 	updateVariables();
 })
 
 // SocketIO Events =====================================================================
+
 socket.on('connect',(s)=>{
+	console.log("Conectado...");
 	newUserConnected();
+	socket.emit(request_updates_route);
 })
 
 // Recive Updates
-socket.on(updates_to_web_route,(data)=>{
-	reciveUpdates(data)
+socket.on(updates_to_web_route, (data)=>{
+	reciveUpdates(data);
+	socket.emit(response_route_maqueta);
+	console.log("Responding...");
+
 });
 
-socket.on(request_updates_route,()=>{
+socket.on(request_updates_route, ()=>{
 	updateVariables();
+	console.log("Solicitudes ");
+});
+
+//recive response
+socket.on(response_route_web, ()=>{
+	response = true;
+	console.log("Maqueta responsed!");
 });
 
 // Recive video Stream
