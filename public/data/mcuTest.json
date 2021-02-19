@@ -1,0 +1,233 @@
+{
+   "1":{
+      "type":"radio",
+      "id":"1",
+      "statement":"El giro es: ",
+      "answers":{
+         "1":{
+            "value":"Horario",
+            "correct": false
+         },
+         "2":{
+            "value":"AntiHorario",
+            "correct": true
+         }
+      }
+   },
+   "2":{
+      "type":"radio",
+      "id":"1",
+      "statement":"La función de posición del movimiento circular es ______, ¿cuánto vale el radio?",
+      "answers":{
+         "1":{
+            "value":3,
+            "correct":false
+         },
+         "2":{
+            "value":6,
+            "correct":true
+         },
+         "3":{
+            "value":9,
+            "correct":false
+         }
+      }
+   },
+   "3":{
+      "type":"radio",
+      "id":"1",
+      "statement":"Analice el vídeo del movimiento circular y encuentre el vector de posición inicial.",
+      "answers":{
+         "1":{
+            "value":2,
+            "correct":false
+         },
+         "2":{
+            "value":3,
+            "correct":true
+         },
+         "3":{
+            "value":5,
+            "correct":false
+         },
+         "4":{
+            "value":7,
+            "correct":true
+         }
+      }
+   },
+
+   "4":{
+      "type":"radio",
+      "id":"1",
+      "statement":"Analice el vídeo del movimiento circular y encuentre la posición angula inicial.",
+      "answers":{
+         "1":{
+            "value":2,
+            "correct":false
+         },
+         "2":{
+            "value":3,
+            "correct":true
+         },
+         "3":{
+            "value":5,
+            "correct":false
+         },
+         "4":{
+            "value":7,
+            "correct":false
+         }
+      }
+   },
+
+   "5":{
+      "type":"radio",
+      "id":"1",
+      "statement":"Analice el vídeo del movimiento circular y encuentre el vector de posición final.",
+      "answers":{
+         "1":{
+            "value":2,
+            "correct":true
+         },
+         "2":{
+            "value":3,
+            "correct": false
+         },
+         "3":{
+            "value":5,
+            "correct":false
+         },
+         "4":{
+            "value":7,
+            "correct":false
+         }
+      }
+   },
+
+   "6":{
+      "type":"radio",
+      "id":"1",
+      "statement":"Analice el vídeo del movimiento circular y encuentre la posición angular final.",
+      "answers":{
+         "1":{
+            "value":2,
+            "correct":true
+         },
+         "2":{
+            "value":3,
+            "correct": true
+         },
+         "3":{
+            "value":5,
+            "correct":true
+         },
+         "4":{
+            "value":7,
+            "correct":false
+         }
+      }
+   },
+
+   "7":{
+      "type":"radio",
+      "id":"1",
+      "statement":"Analice el vídeo del movimiento circular y determine el vector de posición en n segundos.",
+      "answers":{
+         "1":{
+            "value":2,
+            "correct":true
+         },
+         "2":{
+            "value":3,
+            "correct": false
+         },
+         "3":{
+            "value":5,
+            "correct":false
+         },
+         "4":{
+            "value":7,
+            "correct":false
+         }
+      }
+   },
+
+   "8":{
+      "type":"radio",
+      "id":"1",
+      "statement":"Analice el vídeo del movimiento circular y determine la posición angular en n segundos.",
+      "answers":{
+
+         "1":{
+            "value":2,
+            "correct":true
+         },
+         "2":{
+            "value":3,
+            "correct": false
+         },
+         "3":{
+            "value":5,
+            "correct":false
+         },
+         "4":{
+            "value":7,
+            "correct":false
+         }
+      }
+   },
+
+   "9":{
+      "type":"radio",
+      "id":"1",
+      "statement":"Analice el vídeo del movimiento circular y determine la posición angular en n segundos.",
+      "answers":{
+
+         "1":{
+            "value":2,
+            "correct":true
+         },
+         "2":{
+            "value":3,
+            "correct": false
+         },
+         "3":{
+            "value":5,
+            "correct":false
+         },
+         "4":{
+            "value":7,
+            "correct":false
+         }
+      }
+   },
+
+   "10":{
+      "type":"radio",
+      "id":"1",
+      "statement":"Analice el vídeo del movimiento circular y determine la posición angular en n segundos.",
+      "answers":{
+
+         "1":{
+            "value":2,
+            "correct":true
+         },
+         "2":{
+            "value":3,
+            "correct": false
+         },
+         "3":{
+            "value":5,
+            "correct":false
+         },
+         "4":{
+            "value":7,
+            "correct":false
+         }
+      }
+   },
+
+
+
+}

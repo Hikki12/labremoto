@@ -76,7 +76,7 @@ app.post('/file_upload', upload.any(), function (req, res, next) {
 const server = app.listen(app.get('port'), () => {
 	console.log('server on port ',app.get('port'));
 
-});
+}, '0.0.0.0');
 
 // ----------------------------------------------
 const io = SocketIO(server);
