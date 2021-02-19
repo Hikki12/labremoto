@@ -6,6 +6,6 @@ module.exports = {
         'password': '9nWjud2anYaYnh1hnWIH', // şifreniz 
         'database': 'blhpuq0t9qznn8fuktjs'// database ismi .
     },
-	'database': 'LabRemotoUTPL',
+	'database': 'blhpuq0t9qznn8fuktjs',
     
 };
