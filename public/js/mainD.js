@@ -289,6 +289,6 @@ socket.on(response_route_web, ()=>{
 });
 
 // Recive video Stream
-socket.on(streaming_route,(frame64)=>{
+socket.on(streaming_route, (frame64)=>{
 	img.src ='data:image/jpeg;base64,' + frame64;
 });
