@@ -156,10 +156,10 @@ const updateVariables = () => {
 const reciveUpdates = (data) => {
 	variables = JSON.parse(JSON.stringify(data));
 	console.log("Received: ", variables);
-	playBtn.checked = !Boolean(variables.PlayState);
+	playBtn.checked = Boolean(variables.PlayState);
 	recordBtn.checked = Boolean(variables.Recording);
 	lightBtn.checked = Boolean(variables.LightState);
-	dirBtn.checked = !Boolean(variables.DirState);
+	dirBtn.checked = Boolean(variables.DirState);
 
 	//Radio
 	if(variables.Radio === 1){
