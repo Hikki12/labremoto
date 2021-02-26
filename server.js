@@ -14,8 +14,11 @@ var morgan = require('morgan');
 var passport = require('passport');
 var flash    = require('connect-flash');
 const { publicDecrypt } = require('crypto');
-require('./config/passport.js')(passport); 
 
+
+require('./config/passport.js')(passport); 
+require('./app/videostream.js')(app);
+require('./app/downloads.js')(app);
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({
@@ -74,7 +77,7 @@ app.post('/file_upload', upload.any(), function (req, res, next) {
 
 //start server
 const server = app.listen(app.get('port'), () => {
-	console.log('server on port ',app.get('port'));
+	console.log('server on port ', app.get('port'));
 
 }, '0.0.0.0');
 

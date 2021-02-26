@@ -7,5 +7,4 @@ module.exports = {
         'database': 'blhpuq0t9qznn8fuktjs'// database ismi .
     },
 	'database': 'blhpuq0t9qznn8fuktjs',
-    
 };

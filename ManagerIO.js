@@ -20,7 +20,7 @@ class MyEmitter extends EventEmitter {}
 const ManagerIO = new MyEmitter();
 
 
-module.exports = (io)=> {
+module.exports = (io) => {
 // SocketIO ================================================================================================
 
 	var clients = [];

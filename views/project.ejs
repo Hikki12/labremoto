@@ -10,7 +10,7 @@
         <link href="/css/figura.css" rel="stylesheet">
         <div class="container-fluid ">
             <div class="text-center">
-                <h1>Prácticas del Laboratorio Remoto</h1>
+                <h1>PRÁCTICAS</h1>
                 <i>
                     <h4>Maquetas disponibles</h4>
                 </i>
@@ -21,7 +21,6 @@
                 <div class="col-sm-12">
                     <div class=" row card" style="width: auto; margin: auto auto;">
                         <div class="card-body">
-                            <h5 class="text-left">Listado de Maquetas: </h5><br>
                             <% if (rol == "admin") { %>
                             <button class="btn-outline-info btn">
                                 <a href="/moreModels" class="entrarA">Añadir más maquetas</a>
@@ -36,7 +35,7 @@
                                 <div class="card-body ">
                                     <div class="row card-body">
                                         <div class="col-lg-5">
-                                            <h6><i>Estado de uso:</i></h6>
+                                            <h6><i>Estado de Reserva:</i></h6>
                                             <div class="row ">
                                                 <script>
                                                     //obtener valor del id
@@ -58,10 +57,11 @@
 
                                             </div>
                                         </div>
-                                        <hr class="col-xl-11">
+                                        
                                     </div>
+                                    
                                     <div class="card card-body col-lg-12">
-                                        <h6><i>Descripcion de la maqueta</i></h6>
+                                        <h6><i> <strong> DESCRIPCIÓN: </strong> </h6>  
                                         <p class="text-justifly"><%= result2[i].description %></p>
                                     </div>
                                     <div class=" card-body col-lg-12">

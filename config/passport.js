@@ -1,9 +1,9 @@
 var LocalStrategy   = require('passport-local').Strategy;
-
 var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
 var dbconfig = require('./database');
-var connection = mysql.createConnection(dbconfig.connection);
+// var connection = mysql.createConnection(dbconfig.connection);
+var connection = mysql.createPool(dbconfig.connection);
 
 connection.query('USE ' + dbconfig.database);
 
@@ -55,7 +55,6 @@ module.exports = function(passport) {
     passport.use(
         'local-login',
         new LocalStrategy({
-            
             usernameField : 'username',
             passwordField : 'password',
             passReqToCallback : true 
@@ -67,7 +66,6 @@ module.exports = function(passport) {
                 if (!rows.length) {
                     return done(null, false, req.flash('loginMessage', 'Usuario incorrecto.')); 
                 }
-
            
                 if (!bcrypt.compareSync(password, rows[0].password))
                     return done(null, false, req.flash('loginMessage', 'Contraseña incorrecta.'));
@@ -81,7 +79,6 @@ module.exports = function(passport) {
     passport.use(
         'local-reserva',
         new LocalStrategy({
-
             nameField : 'name',
             lastNameField : 'lastName',
             emailField : 'email',

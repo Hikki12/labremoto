@@ -36,6 +36,8 @@ const response_route_web = "response to web";
 var img = document.getElementById("video");
 
 // Buttons ====================================================================
+var downloadBtn = document.getElementById("downloadBtn");
+
 
 var dirBtn = document.getElementById("clockwiseBtn");
 var lightBtn = document.getElementById("lightBtn");
@@ -142,27 +144,6 @@ var timer = new Timer(checkResponse, 250);
 timer.pause();
 
 
-const downloadFiles = ()=> {
-	const fileName = "default.mp4";
-
-    axios({
-        method: 'get',
-        url: 'http://localhost:3000/downloadFiles',
-        responseType: 'blob',
-        headers: {},
-        })
-        .then((res) => {
-            const url = window.URL.createObjectURL(new Blob([res.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', fileName);
-            document.body.appendChild(link);
-            link.click();
-        })
-        .catch((error) => {
-            alert(error);
-        })
-}
 
 const updateVariables = () => {
 	console.log(variables);
@@ -272,6 +253,13 @@ timeInput.addEventListener('input',()=>{
 	variables["RecordingTime"] = parseInt(timeInput.value);
 	updateVariables();
 })
+
+// DOWNLOAD EVENTS =======================
+
+// downloadBtn.addEventListener('click', ()=>{
+// console.log("Solicitar Descarga")
+// });
+
 
 // SocketIO Events =====================================================================
 
