@@ -40,6 +40,7 @@ var downloadBtn = document.getElementById("downloadBtn");
 
 
 var dirBtn = document.getElementById("clockwiseBtn");
+dirBtn.checked = true;
 var lightBtn = document.getElementById("lightBtn");
 
 var r1Btn = document.getElementById("r1Btn");
