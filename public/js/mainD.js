@@ -14,8 +14,8 @@ function Timer(callback, delay) {
 }
 
 
-const socket = io.connect();
 
+const socket = io.connect();
 let userName = "";
 let maquetaId = "MAQUETA-MCU";
 let response = false;
@@ -47,7 +47,11 @@ var r2Btn = document.getElementById("r2Btn");
 var r3Btn = document.getElementById("r3Btn");
 
 var playBtn = document.getElementById("playBtn");
+playBtn.checked = true;
 var recordBtn = document.getElementById("recordBtn");
+
+var playLabel = document.getElementById("playLabel");
+var recordLabel = document.getElementById("recordLabel");
 
 var speedSlider = document.getElementById("speedSlider");
 var speedLabel = document.getElementById("sliderLabelValue");
@@ -112,12 +116,13 @@ const unlockControls = ()=>{
 	speedSlider.disabled = false;
 	dirBtn.disabled = false;
 	timeInput.disabled = false;
+	unlock = true;
 }
 
 ///
 
 var check_count = 0;
-
+var unlock = true;
 const checkResponse = function() {
 
 	if(response){
@@ -131,8 +136,11 @@ const checkResponse = function() {
 		console.log(check_count);
 		if(check_count>=4){
 			restoreBackup();
-			reciveUpdates(variables)
-			unlockControls();
+			reciveUpdates(variables);
+			if(unlock){
+				unlockControls();
+			}
+			
 			check_count = 0
 			timer.pause();			
 		}
@@ -146,7 +154,7 @@ timer.pause();
 
 
 const updateVariables = () => {
-	console.log(variables);
+	//console.log(variables);
 	dataBackup();
 	lockControls();
 	socket.emit(updates_to_maqueta_route, variables);
@@ -155,8 +163,8 @@ const updateVariables = () => {
 
 const reciveUpdates = (data) => {
 	variables = JSON.parse(JSON.stringify(data));
-	console.log("Received: ", variables);
-	playBtn.checked = Boolean(variables.PlayState);
+	//console.log("Received: ", variables);
+	playBtn.checked = !Boolean(variables.PlayState);
 	recordBtn.checked = Boolean(variables.Recording);
 	lightBtn.checked = Boolean(variables.LightState);
 	dirBtn.checked = Boolean(variables.DirState);
@@ -199,6 +207,9 @@ lightBtn.addEventListener('input',()=>{
 playBtn.addEventListener('input',()=>{
 	if(!playBtn.checked){
 		msg.innerHTML = "PRESIONER GRABAR";
+		playLabel.innerHTML = "DETENER";
+	}else{
+		playLabel.innerHTML = "INICIAR";
 	}
 	variables["PlayState"] = !Boolean(playBtn.checked);
 	updateVariables();
@@ -211,13 +222,19 @@ recordBtn.addEventListener('input',()=>{
 		msg.innerHTML = "PRESIONE INICIAR";
 	}
 	variables["Recording"] = Boolean(recordBtn.checked);
-
+	
 	if(recordBtn.checked){
+		console.log("Grabando...");
 		msg.innerHTML = "GRABANDO...";
+		unlock = false;
 		lockControls();
-		setTimeout(unlockControls, 5000);
+		setTimeout(unlockControls, 1000*variables["RecordingTime"]);
+	}else{
+		playBtn.checked = true;
+		msg.innerHTML = "PRESIONE INICIAR";
 	}
 	updateVariables();
+	
 });
 
 r1Btn.addEventListener('input',()=>{
